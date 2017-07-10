@@ -3,7 +3,8 @@
   background-color: #F0E68C;
   -webkit-box-shadow: 0 8px 6px -6px #999;
   -moz-box-shadow: 0 8px 6px -6px #999;
-  box-shadow: 0 8px 6px -6px #999;
+  box-shadow: 0 11px 8px -6px #999;
+  z-index: 1000;
 }
 
 a.navbar-brand {
