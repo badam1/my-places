@@ -1,0 +1,51 @@
+.navbar {
+  height: 100px;
+  background-color: #F0E68C;
+  -webkit-box-shadow: 0 8px 6px -6px #999;
+  -moz-box-shadow: 0 8px 6px -6px #999;
+  box-shadow: 0 8px 6px -6px #999;
+}
+
+a.navbar-brand {
+  font-weight: 700;
+  color: #1976D2;
+}
+
+a.navbar-brand:hover {
+  color: #C30E2E;
+}
+
+.navbar-brand-flip {
+  transform: rotateX(5400deg);
+  transition: 4s cubic-bezier(1, 0.03, 0, 1.01);
+}
+
+a.nav-link.active {
+  color: #1976D2;
+  text-shadow: 1px 1px #222222;
+}
+
+a.nav-link {
+  color: #C30E2E;
+}
+
+a:hover, a.nav-link:hover {
+  cursor: pointer;
+  color: #1976D2;
+  text-shadow: 1px 1px #222222;
+}
+#searchInput {
+  color: #1976D2;
+  border-radius: 100px;
+  width: 70%;
+  transition: width .4s ease-in-out;
+  transition-property: width;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-in-out;
+  transition-delay: initial;
+}
+
+#searchInput:focus {
+  width: 100%;
+}
+

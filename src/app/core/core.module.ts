@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AgmCoreModule } from '@agm/core';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {HttpModule} from '@angular/http';
 
-import { SideBarComponent } from './side-bar/side-bar.component';
-import { MapComponent } from './map/map.component';
-import { PlaceFormComponent } from './place-form/place-form.component';
-import { GeocodingApiService } from './map/geocoding.service';
-import { HttpModule } from '@angular/http';
+import {AgmCoreModule} from '@agm/core';
+
+import {HeaderComponent} from './header/header.component';
+import {MapComponent} from './map/map.component';
+import {PlaceFormComponent} from './place-form/place-form.component';
+import {GeocodingApiService} from './map/geocoding.service';
+import {NavBrandFlipDirective} from './header/nav-brand-flip.directive';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,17 +17,19 @@ import { HttpModule } from '@angular/http';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCXzNCd2YePDSe0W49Cj04gIKip8rVWCHE'
     }),
-    HttpModule
+    HttpModule,
+    SharedModule
   ],
   declarations: [
-    SideBarComponent,
+    HeaderComponent,
     MapComponent,
-    PlaceFormComponent
+    PlaceFormComponent,
+    NavBrandFlipDirective
   ],
   providers: [GeocodingApiService],
   exports: [
     MapComponent,
-    SideBarComponent
+    HeaderComponent
   ]
 })
 export class CoreModule {
