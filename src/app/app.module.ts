@@ -1,9 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { AgmCoreModule } from '@agm/core';
+import {AppComponent} from './app.component';
+import {CoreModule} from './core/core.module';
+import {ProfileModule} from './profile/profile.module';
+import {AuthModule} from './auth/auth.module';
+import {SharedModule} from './shared/shared.module';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -12,11 +16,13 @@ import { AgmCoreModule } from '@agm/core';
   imports: [
     BrowserModule,
     FormsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCXzNCd2YePDSe0W49Cj04gIKip8rVWCHE'
-    })
+    CoreModule,
+    ProfileModule,
+    AuthModule,
+    SharedModule,
+    AppRoutingModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
