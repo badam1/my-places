@@ -5,11 +5,12 @@ import {ProfileComponent} from './profile/profile.component';
 import {SignUpComponent} from './auth/sign-up/sign-up.component';
 import {SignInComponent} from './auth/sign-in/sign-in.component';
 import {PlaceFormComponent} from 'app/core/place-form/place-form.component';
+import {AuthGuard} from './auth/auth.guard';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/places', pathMatch: 'full'},
   {path: 'places', component: PlacesComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile', component: ProfileComponent, canLoad: [AuthGuard], canActivate: [AuthGuard]},
   {path: 'signup', component: SignUpComponent},
   {path: 'signin', component: SignInComponent},
   {path: 'placeform', component: PlaceFormComponent}
@@ -19,4 +20,5 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

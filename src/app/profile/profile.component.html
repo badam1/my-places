@@ -1,3 +1,59 @@
-<p>
-  profile works!
-</p>
+<div class="container">
+  <br/><br/>
+  <h1 class="text-center">Profile page</h1>
+  <hr>
+  <br/><br/>
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(profileForm.get('username'))">
+              <label for="username">Username</label>
+              <input type="text" id="username" class="form-control" formControlName="username"
+                     [ngClass]="giveBootstrapValidationClassInput(profileForm.get('username'))"/>
+            </div>
+            <p *ngIf="profileForm.get('username').hasError('required')" class="text-danger">Username is required</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(profileForm.get('email'))">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" formControlName="email"
+                     [ngClass]="giveBootstrapValidationClassInput(profileForm.get('email'))"/>
+            </div>
+            <p *ngIf="profileForm.get('email').hasError('email')" class="text-danger">Please add a valid email</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(profileForm.get('password'))">
+              <label for="password">Password</label>
+              <input type="password" id="password" class="form-control" formControlName="password"
+                     [ngClass]="giveBootstrapValidationClassInput(profileForm.get('password'))"/>
+            </div>
+            <p *ngIf="profileForm.get('password').hasError('mismatchedPasswords')" class="text-danger">The passwords doesn't match</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(profileForm.get('repeatPassword'))">
+              <label for="repeatPassword">Repeat Password</label>
+              <input type="password" id="repeatPassword" class="form-control" formControlName="repeatPassword"
+                     [ngClass]="giveBootstrapValidationClassInput(profileForm.get('repeatPassword'))"/>
+            </div>
+            <p *ngIf="profileForm.get('repeatPassword').hasError('mismatchedPasswords')" class="text-danger">The passwords doesn't match</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button [disabled]="!profileForm.valid" class="btn btn-success" type="submit">Save</button>
+            <button (click)="onDeleteAccount()" class="btn btn-danger" type="button">Delete Account</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
