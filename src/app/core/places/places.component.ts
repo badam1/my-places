@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GeocodingApiService } from '../place-form/geocoding.service';
 import { Place } from '../place.model';
 import { PlacesService } from './places.service';
+import {FirebaseListObservable} from 'angularfire2/database';
 
 @Component({
   selector: 'app-places',
@@ -12,7 +13,7 @@ export class PlacesComponent implements OnInit {
   // BUDAPEST
   lat = 47.498924;
   lng = 19.040579;
-  places: Place[] = [];
+  places: FirebaseListObservable<Place[]>;
 
   constructor(private placesService: PlacesService) {
   }

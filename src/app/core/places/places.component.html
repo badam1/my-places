@@ -1,5 +1,5 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
-  <agm-marker *ngFor="let place of places" [latitude]="place.latitude" [longitude]="place.longitude" [iconUrl]="'assets/icons/restaurant.png'">
+  <agm-marker *ngFor="let place of places | async" [latitude]="place.latitude" [longitude]="place.longitude" [iconUrl]="'assets/icons/restaurant.png'">
     <agm-info-window [disableAutoPan]="true">
       <div class="agm-info-window-content container" style="max-width: 400px;">
         <div class="row">
