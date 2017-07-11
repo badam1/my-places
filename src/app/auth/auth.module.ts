@@ -17,7 +17,7 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
   ],
   declarations: [
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
   ],
 })
 export class AuthModule {
