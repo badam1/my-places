@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import {AbstractControl, FormControl} from '@angular/forms';
+import {Injectable} from '@angular/core';
+import {AbstractControl} from '@angular/forms';
+import {BootstrapValidation} from './bootstrap-validation';
 
 @Injectable()
-export class BootstrapValidationService {
-
-  constructor() { }
+export class BootstrapValidationService implements BootstrapValidation {
 
   giveBootstrapValidationClassDiv(control: AbstractControl): string {
     if (control.touched) {

@@ -36,6 +36,7 @@ export class AuthService {
   signOutUser() {
     this.afa.auth.signOut();
     this._token = null;
+    this.router.navigate(['/places']);
   }
 
   getAuthCurrentUser() {
@@ -46,12 +47,20 @@ export class AuthService {
     return this.loggedInUser;
   }
 
-  updateUser(updatedUser: User) {
+  updateUser(updatedUser: User, newPassword: string) {
     this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).update(updatedUser);
+    this.afa.auth.currentUser.updateEmail(updatedUser.email);
+    this.afa.auth.currentUser.updatePassword(newPassword);
+    this._token = null;
+    this.afa.auth.signOut();
+    this.router.navigate(['/signin']);
   }
 
   deleteUser() {
     this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).remove();
+    this.afa.auth.currentUser.delete();
+    this._token = null;
+    this.signOutUser();
   }
 
   getToken(): string {

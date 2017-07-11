@@ -15,6 +15,7 @@ import {PlacesService} from './places/places.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../auth/auth.service';
 import {BootstrapValidationService} from '../shared/bootstrap-validation.service';
+import {AuthGuard} from '../auth/auth.guard';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import {BootstrapValidationService} from '../shared/bootstrap-validation.service
     GeocodingApiService,
     PlacesService,
     AuthService,
+    AuthGuard,
     BootstrapValidationService
   ],
   exports: [
