@@ -11,6 +11,8 @@ import {GeocodingApiService} from './map/geocoding.service';
 import {NavBrandFlipDirective} from './header/nav-brand-flip.directive';
 import {SharedModule} from '../shared/shared.module';
 import {AppRoutingModule} from '../app-routing.module';
+import {AuthService} from '../auth/auth.service';
+import {BootstrapValidationService} from '../shared/bootstrap-validation.service';
 
 @NgModule({
   imports: [
@@ -28,7 +30,11 @@ import {AppRoutingModule} from '../app-routing.module';
     PlaceFormComponent,
     NavBrandFlipDirective
   ],
-  providers: [GeocodingApiService],
+  providers: [
+    GeocodingApiService,
+    AuthService,
+    BootstrapValidationService,
+  ],
   exports: [
     MapComponent,
     HeaderComponent

@@ -30,15 +30,20 @@
       <input id="searchInput" class="form-control mr-sm-2" type="text" placeholder="Search">
     </form>
     <ul class="navbar-nav mr-5">
-      <li class="nav-item dropdown" appDropdown="">
+      <li *ngIf="auth.isAuthenticated(); else signInLink" class="nav-item dropdown" appDropdown="">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false"><i class="fa fa-user"></i> Username</a>
+           aria-expanded="false"><i class="fa fa-user"></i> {{ loggedInUser.username | titlecase }}</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" routerLink="profile" routerLinkActive="active">Profile</a>
           <hr>
-          <a class="dropdown-item" routerLink="signin" routerLinkActive="active">Sign-In</a>
-          <a class="dropdown-item" routerLink="signout" routerLinkActive="active">Sign-Out</a>
+          <a class="dropdown-item" (click)="onSignOut()">Sign-Out <i
+            class="fa fa-sign-out"></i></a>
         </div>
+      </li>
+      <li class="nav-item">
+        <ng-template #signInLink>
+          <a class="nav-link" routerLink="signin" routerLinkActive="active">Sign-In <i class="fa fa-sign-in"></i></a>
+        </ng-template>
       </li>
     </ul>
   </div>
