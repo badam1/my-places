@@ -10,6 +10,7 @@ import {PlaceFormComponent} from './place-form/place-form.component';
 import {GeocodingApiService} from './map/geocoding.service';
 import {NavBrandFlipDirective} from './header/nav-brand-flip.directive';
 import {SharedModule} from '../shared/shared.module';
+import {AppRoutingModule} from '../app-routing.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {SharedModule} from '../shared/shared.module';
       apiKey: 'AIzaSyCXzNCd2YePDSe0W49Cj04gIKip8rVWCHE'
     }),
     HttpModule,
-    SharedModule
+    SharedModule,
+    AppRoutingModule
   ],
   declarations: [
     HeaderComponent,

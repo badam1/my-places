@@ -5,7 +5,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <a class="navbar-brand text-uppercase" routerLink="/home" appNavBrandFlip>
+  <a class="navbar-brand text-uppercase" routerLink="places" appNavBrandFlip>
     <img src="assets/images/my-places-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
     <span style="margin-left: -7px">My Places</span>
   </a>
@@ -13,7 +13,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="home" routerLinkActive="active"><i class="fa fa-home"></i> Places<span
+        <a class="nav-link" routerLink="places" routerLinkActive="active"><i class="fa fa-home"></i> Places<span
           class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown" appDropdown="">
@@ -34,8 +34,8 @@
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
            aria-expanded="false"><i class="fa fa-user"></i> Username</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" routerLink="signin" routerLinkActive="active">Profile</a>
-          <a class="dropdown-divider"></a>
+          <a class="dropdown-item" routerLink="profile" routerLinkActive="active">Profile</a>
+          <hr>
           <a class="dropdown-item" routerLink="signin" routerLinkActive="active">Sign-In</a>
           <a class="dropdown-item" routerLink="signout" routerLinkActive="active">Sign-Out</a>
         </div>
