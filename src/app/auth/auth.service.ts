@@ -6,13 +6,12 @@ import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/databa
 import * as firebase from 'firebase/app';
 
 import {User} from './user.model';
-import {Subject} from 'rxjs/Subject';
 
 
 @Injectable()
 export class AuthService {
   private _token: string;
-  loggedInUser = new Subject<FirebaseObjectObservable<User>>();
+  private loggedInUser: FirebaseObjectObservable<User>;
 
   constructor(private afa: AngularFireAuth, private afd: AngularFireDatabase, private router: Router) {
   }
@@ -27,8 +26,7 @@ export class AuthService {
     this.afa.auth.signInWithEmailAndPassword(email, password)
       .then((response: firebase.User) => {
         console.log('firebase Auth promise response', response.toJSON());
-        const currentUser = this.afd.object(`/users/${this.getAuthCurrentUser().uid}`);
-        this.loggedInUser.next(currentUser);
+        this.loggedInUser = this.afd.object(`/users/${this.getAuthCurrentUser().uid}`);
         this.refreshToken();
         this.router.navigate(['/places']);
       })
@@ -42,6 +40,10 @@ export class AuthService {
 
   getAuthCurrentUser() {
     return this.afa.auth.currentUser;
+  }
+
+  getLoggedUser(): FirebaseObjectObservable<User> {
+    return this.loggedInUser;
   }
 
   updateUser(updatedUser: User) {

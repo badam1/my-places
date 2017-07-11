@@ -32,7 +32,7 @@
     <ul class="navbar-nav mr-5">
       <li *ngIf="auth.isAuthenticated(); else signInLink" class="nav-item dropdown" appDropdown="">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false"><i class="fa fa-user"></i> {{ loggedInUser.username | titlecase }}</a>
+           aria-expanded="false"><i class="fa fa-user"></i> {{ (auth.getLoggedUser() | async)?.username | titlecase }}</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" routerLink="profile" routerLinkActive="active">Profile</a>
           <hr>
