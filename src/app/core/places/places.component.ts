@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { GeocodingApiService } from './geocoding.service';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  selector: 'app-places',
+  templateUrl: './places.component.html',
+  styleUrls: ['./places.component.css']
 })
-export class MapComponent implements OnInit {
+export class PlacesComponent implements OnInit {
   // BUDAPEST
   lat = 47.498924;
   lng = 19.040579;
