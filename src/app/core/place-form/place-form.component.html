@@ -1,3 +1,18 @@
-<p>
-  place-form works!
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Place name</label>
+            <input type="text"
+                   id="name"
+                   formControlName="name"
+                   class="form-control">
+          </div>
+        </div>
+      </div>
+      <button type="submit">Save place</button>
+    </form>
+  </div>
+</div>

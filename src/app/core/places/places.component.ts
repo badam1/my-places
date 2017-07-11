@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeocodingApiService } from './geocoding.service';
+import { Place } from '../place.model';
+import { PlacesService } from './places.service';
 
 @Component({
   selector: 'app-places',
@@ -10,11 +12,13 @@ export class PlacesComponent implements OnInit {
   // BUDAPEST
   lat = 47.498924;
   lng = 19.040579;
+  places: Place[] = [];
 
-  constructor(private geocodingAPIService: GeocodingApiService) {
+  constructor(private geocodingAPIService: GeocodingApiService, private placesService: PlacesService) {
   }
 
   ngOnInit() {
+    this.places = this.placesService.getPlaces();
   }
 
   updateLatLngFromAddress() {

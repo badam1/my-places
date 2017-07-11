@@ -1,3 +1,34 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+  <agm-marker *ngFor="let place of places" [latitude]="place.latitude" [longitude]="place.longitude" [iconUrl]="'assets/icons/restaurant.png'">
+    <agm-info-window [disableAutoPan]="true">
+      <div class="agm-info-window-content container" style="max-width: 400px;">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <h4>{{place.name}}</h4>
+            </div>
+            <div class="row">
+              <p>{{place.postcode}}  </p>
+              <p>{{place.street}}  </p>
+              <p>{{place.houseNumber}}</p>
+            </div>
+            <div class="row">
+              <p>Open time: {{place.openTime}} - {{place.closeTime}}</p>
+            </div>
+            <div class="row">
+              <p>URL</p><a target="_blank" href="{{place.webUrl}}">:  Link</a>
+            </div>
+            <div class="row">
+              <button type="button" class="btn btn-primary">Details</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <img src="{{place.imagePath}}" alt="{{place.name}}" class="img-responsive" style="max-height: 150px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </agm-info-window>
+  </agm-marker>
 </agm-map>
