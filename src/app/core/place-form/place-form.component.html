@@ -1,18 +1,141 @@
-<div class="row">
-  <div class="col-xs-12">
-    <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="name">Place name</label>
-            <input type="text"
-                   id="name"
-                   formControlName="name"
-                   class="form-control">
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
+        <br>
+        <br>
+        <!--Place name row-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5><label for="name">Place name</label></h5>
+              <input type="text"
+                     id="name"
+                     formControlName="name"
+                     class="form-control">
+            </div>
           </div>
         </div>
-      </div>
-      <button type="submit">Save place</button>
-    </form>
+        <!--Description row-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5><label for="description">Description</label></h5>
+              <textarea type="text"
+                        id="description"
+                        formControlName="description"
+                        class="form-control"
+                        rows="3">
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <!--Address row-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5><label for="address">Address</label></h5>
+              <input type="text"
+                     id="address"
+                     formControlName="address"
+                     class="form-control">
+            </div>
+          </div>
+        </div>
+        <!--Choose address from map ROW-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5>Click on map for address</h5>
+              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15" (mapClick)="realtimeReverseGeocoding($event)">
+                <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="'assets/icons/restaurant.png'">
+                </agm-marker>
+              </agm-map>
+            </div>
+          </div>
+        </div>
+        <!--Choose categories row-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5><label for="categories">Categories</label></h5>
+              <input type="text"
+                     id="categories"
+                     formControlName="categories"
+                     class="form-control">
+            </div>
+          </div>
+        </div>
+        <!--set imagepath row-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5><label for="imagePath">Image Path</label></h5>
+              <input type="text"
+                     id="imagePath"
+                     formControlName="imagePath"
+                     class="form-control">
+            </div>
+          </div>
+        </div>
+        <!--phone number row-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5><label for="phoneNumber">Phone number</label></h5>
+              <input type="tel"
+                     id="phoneNumber"
+                     formControlName="phoneNumber"
+                     class="form-control">
+            </div>
+          </div>
+        </div>
+        <!--web URL row-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+              <h5><label for="webUrl">Website URL</label></h5>
+              <input type="url"
+                     id="webUrl"
+                     formControlName="webUrl"
+                     class="form-control">
+            </div>
+          </div>
+        </div>
+        <!--open close number picker-->
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+
+            <div class="container">
+              <div class="row">
+                <h5>Set opening and closing time</h5>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-md-6">
+                  <div class="form-group">
+                    <h6><label for="openTime">Open</label></h6>
+                    <input type="time"
+                           id="openTime"
+                           formControlName="openTime"
+                           class="form-control">
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                  <div class="form-group">
+                    <h6><label for="closeTime">Close</label></h6>
+                    <input type="time"
+                           id="closeTime"
+                           formControlName="closeTime"
+                           class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Save place</button>
+      </form>
+    </div>
   </div>
 </div>
+

@@ -7,7 +7,7 @@ import { AgmCoreModule } from '@agm/core';
 import { HeaderComponent } from './header/header.component';
 import { PlacesComponent } from './places/places.component';
 import { PlaceFormComponent } from './place-form/place-form.component';
-import { GeocodingApiService } from './places/geocoding.service';
+import { GeocodingApiService } from './place-form/geocoding.service';
 import { NavBrandFlipDirective } from './header/nav-brand-flip.directive';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';

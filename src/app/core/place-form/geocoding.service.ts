@@ -9,11 +9,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class GeocodingApiService {
   API_KEY: string;
-  API_URL: string;
+  API_URL_GEOCODE: string;
+  API_URL_REVERSE_GEOCODE: string;
 
   constructor(private http: Http) {
     this.API_KEY = 'AIzaSyCXzNCd2YePDSe0W49Cj04gIKip8rVWCHE';
-    this.API_URL = `https://maps.googleapis.com/maps/api/geocode/json?key=${this.API_KEY}&address=`;
+    this.API_URL_GEOCODE = `https://maps.googleapis.com/maps/api/geocode/json?key=${this.API_KEY}&address=`;
+    this.API_URL_REVERSE_GEOCODE = `https://maps.googleapis.com/maps/api/geocode/json?key=${this.API_KEY}&latlng=`
   }
 
   findFromAddress(address: string,
@@ -40,8 +42,21 @@ export class GeocodingApiService {
       compositeAddress.push(country);
     }
 
-    const url = `${this.API_URL}${compositeAddress.join(',')}`;
+    const url = `${this.API_URL_GEOCODE}${compositeAddress.join(',')}`;
 
+    return this.http.get(url).map(response => <any> response.json());
+  }
+
+  // REVERSE GEOCODING
+  findFromLatLng(lat: number, lng: number) {
+    const compositeAddress = [];
+    if (lat) {
+      compositeAddress.push(lat);
+    }
+    if (lng) {
+      compositeAddress.push(lng);
+    }
+    const url = `${this.API_URL_REVERSE_GEOCODE}${compositeAddress.join(',')}`;
     return this.http.get(url).map(response => <any> response.json());
   }
 }
