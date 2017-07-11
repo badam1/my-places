@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AuthService} from '../auth/auth.service';
 import {BootstrapValidationService} from '../shared/bootstrap-validation.service';
 import {AuthGuard} from '../auth/auth.guard';
+import { CategoriesService } from './categories.service';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import {AuthGuard} from '../auth/auth.guard';
     PlacesService,
     AuthService,
     AuthGuard,
-    BootstrapValidationService
+    BootstrapValidationService,
+    CategoriesService
   ],
   exports: [
     PlacesComponent,

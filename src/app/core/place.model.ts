@@ -17,7 +17,7 @@ export class Place {
   webUrl: string;
   openTime: number;
   closeTime: number;
-  categories: string[];
+  category: string;
   // TODO Rating
 
   constructor(id: number,
@@ -32,7 +32,7 @@ export class Place {
               webUrl: string,
               openTime: number,
               closeTime: number,
-              categories: string[]) {
+              category: string) {
     this.id = id;
     this.name = name;
     this.userEmail = userEmail;
@@ -45,7 +45,7 @@ export class Place {
     this.webUrl = webUrl;
     this.openTime = openTime;
     this.closeTime = closeTime;
-    this.categories = categories;
+    this.category = category;
   }
 
 }

@@ -1,15 +1,22 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {AuthService} from '../../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
+import { CategoriesService } from '../categories.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
-  constructor(public auth: AuthService) {
+  categories: string[];
+
+  constructor(public auth: AuthService, private categoriesService: CategoriesService) {
+  }
+
+  ngOnInit() {
+    this.categories = this.categoriesService.getCategories();
   }
 
   onSignOut() {

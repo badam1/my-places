@@ -20,9 +20,7 @@
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true"
            aria-expanded="false"><i class="fa fa-list"></i> Categories</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-          <a class="dropdown-item">Coffee-bar</a>
-          <a class="dropdown-item">Pub</a>
-          <a class="dropdown-item">Restaurant</a>
+          <a class="dropdown-item" *ngFor="let cat of categories">{{cat}}</a>
         </div>
       </li>
     </ul>

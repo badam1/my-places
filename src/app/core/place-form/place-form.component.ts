@@ -1,8 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { GeocodingApiService } from './geocoding.service';
 import 'rxjs/add/operator/debounceTime';
+import { BootstrapValidationService } from '../../shared/bootstrap-validation.service';
+import { CategoriesService } from '../categories.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-place-form',
@@ -10,21 +13,29 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./place-form.component.css']
 })
 export class PlaceFormComponent implements OnInit, OnDestroy {
+  imagePath: string;
 
   lat = 47.498924;
   lng = 19.040579;
   placeForm: FormGroup;
+  categories: string[];
+  private invalidImageURL = 'assets/images/sad.png';
 
   // Address controls and subscriptions for simple and reverse geocoding
   addressControl: any;
   addressSubscription: Subscription;
 
-  constructor(private geocodingAPIService: GeocodingApiService) {
+  constructor(private geocodingAPIService: GeocodingApiService,
+              private bootstrapService: BootstrapValidationService,
+              private categoriesService: CategoriesService) {
   }
 
   ngOnInit() {
+    this.imagePath = this.invalidImageURL;
+
     this.initForm();
     this.prepareForGeocoding();
+    this.categories = this.categoriesService.getCategories();
   }
 
   ngOnDestroy() {
@@ -36,17 +47,52 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
       'name': new FormControl(null, [Validators.required]),
       'description': new FormControl(null, [Validators.required]),
       'address': new FormControl(null, [Validators.required]),
-      'categories': new FormControl(null, [Validators.required]),
-      'imagePath': new FormControl(null, [Validators.required]),
+      'category': new FormControl(null, [Validators.required]),
+      'imagePath': new FormControl(null, [Validators.required,
+        Validators.pattern('(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)')]),
       'phoneNumber': new FormControl(null, [Validators.required]),
-      'webUrl': new FormControl(null, [Validators.required]),
+      'webUrl': new FormControl(null, [Validators.required,
+        Validators.pattern('(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]' +
+          '\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.' +
+          '|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})')]),
       'openTime': new FormControl(null, [Validators.required]),
       'closeTime': new FormControl(null, [Validators.required]),
+    });
+
+    this.placeForm.get('imagePath').valueChanges.debounceTime(1000).subscribe((imageURL) => {
+      this.isValidImageURL(imageURL);
     });
   }
 
   onSubmit() {
     console.log(this.placeForm);
+  }
+
+  isValidImageURL(imageURL: string) {
+    if (imageURL.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+      const img = new Image();
+      img.onerror = img.onabort = () => {
+        this.imagePath = this.invalidImageURL;
+      };
+      img.onload = () => {
+        this.imagePath = imageURL;
+      };
+      img.src = imageURL;
+    } else {
+      this.imagePath = this.invalidImageURL;
+    }
+  }
+
+  getCategoryImagePath(category: string) {
+    return this.categoriesService.getCategoryImagePath(category);
+  }
+
+  giveBootstrapValidationClassDiv(control: AbstractControl): string {
+    return this.bootstrapService.giveBootstrapValidationClassDiv(control);
+  }
+
+  giveBootstrapValidationClassInput(control: AbstractControl): string {
+    return this.bootstrapService.giveBootstrapValidationClassInput(control);
   }
 
   prepareForGeocoding() {

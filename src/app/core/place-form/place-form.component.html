@@ -7,25 +7,27 @@
         <!--Place name row-->
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <div class="form-group">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('name'))">
               <h5><label for="name">Place name</label></h5>
               <input type="text"
                      id="name"
                      formControlName="name"
-                     class="form-control">
+                     class="form-control"
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('name'))">
             </div>
           </div>
         </div>
         <!--Description row-->
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <div class="form-group">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('description'))">
               <h5><label for="description">Description</label></h5>
               <textarea type="text"
                         id="description"
                         formControlName="description"
                         class="form-control"
-                        rows="3">
+                        rows="3"
+                        [ngClass]="giveBootstrapValidationClassInput(placeForm.get('description'))">
               </textarea>
             </div>
           </div>
@@ -33,12 +35,13 @@
         <!--Address row-->
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-success': addressControl.value.length>0}">
               <h5><label for="address">Address</label></h5>
               <input type="text"
                      id="address"
                      formControlName="address"
-                     class="form-control">
+                     class="form-control"
+                     [ngClass]="{'form-control-success': addressControl.value.length>0}">
             </div>
           </div>
         </div>
@@ -48,7 +51,7 @@
             <div class="form-group">
               <h5>Click on map for address</h5>
               <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15" (mapClick)="realtimeReverseGeocoding($event)">
-                <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="'assets/icons/restaurant.png'">
+                <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="getCategoryImagePath(category.value)">
                 </agm-marker>
               </agm-map>
             </div>
@@ -57,48 +60,63 @@
         <!--Choose categories row-->
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <div class="form-group">
-              <h5><label for="categories">Categories</label></h5>
-              <input type="text"
-                     id="categories"
-                     formControlName="categories"
-                     class="form-control">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('category'))">
+              <h5><label for="category">Category</label></h5>
+              <select
+                id="category"
+                formControlName="category"
+                class="form-control"
+                #category
+                [ngClass]="giveBootstrapValidationClassInput(placeForm.get('category'))"
+                >
+                <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+              </select>
             </div>
           </div>
         </div>
         <!--set imagepath row-->
         <div class="row">
-          <div class="col-xs-12 col-md-12">
-            <div class="form-group">
+          <div class="col-xs-8 col-md-8">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('imagePath'))">
               <h5><label for="imagePath">Image Path</label></h5>
-              <input type="text"
+              <input type="url"
                      id="imagePath"
                      formControlName="imagePath"
-                     class="form-control">
+                     class="form-control"
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('imagePath'))">
+
             </div>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <img
+              [src]="imagePath"
+              alt="name" class="img-responsive"
+              style="max-height: 200px;">
           </div>
         </div>
         <!--phone number row-->
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <div class="form-group">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('phoneNumber'))">
               <h5><label for="phoneNumber">Phone number</label></h5>
               <input type="tel"
                      id="phoneNumber"
                      formControlName="phoneNumber"
-                     class="form-control">
+                     class="form-control"
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('phoneNumber'))">
             </div>
           </div>
         </div>
         <!--web URL row-->
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <div class="form-group">
+            <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('webUrl'))">
               <h5><label for="webUrl">Website URL</label></h5>
               <input type="url"
                      id="webUrl"
                      formControlName="webUrl"
-                     class="form-control">
+                     class="form-control"
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('webUrl'))">
             </div>
           </div>
         </div>
@@ -112,28 +130,30 @@
               </div>
               <div class="row">
                 <div class="col-xs-6 col-md-6">
-                  <div class="form-group">
+                  <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('openTime'))">
                     <h6><label for="openTime">Open</label></h6>
                     <input type="time"
                            id="openTime"
                            formControlName="openTime"
-                           class="form-control">
+                           class="form-control"
+                           [ngClass]="giveBootstrapValidationClassInput(placeForm.get('openTime'))">
                   </div>
                 </div>
                 <div class="col-xs-6 col-md-6">
-                  <div class="form-group">
+                  <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('closeTime'))">
                     <h6><label for="closeTime">Close</label></h6>
                     <input type="time"
                            id="closeTime"
                            formControlName="closeTime"
-                           class="form-control">
+                           class="form-control"
+                           [ngClass]="giveBootstrapValidationClassInput(placeForm.get('closeTime'))">
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">Save place</button>
+        <button type="submit" class="btn btn-primary btn-lg" [disabled]="!placeForm.valid">Save place</button>
       </form>
     </div>
   </div>
