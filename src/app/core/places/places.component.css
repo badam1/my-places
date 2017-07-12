@@ -1,11 +1,18 @@
 agm-map {
-  height: calc(89vh);
+  height: calc(90vh);
 }
-img {
-  max-height: 150px;
+.disable-scroll{
+  overflow: hidden;
 }
-img:hover {
-  max-height: 400px;
-  position: fixed;
-  transition: 0.5s ease-in-out;
+.background-div{
+  height: 150px;
+  width: 100%;
+  background: no-repeat center;
+  background-size: cover;
+  border-radius: 2rem;
+}
+
+.agm-info-window-content{
+  width: 300px;
+  /*height: 300px;*/
 }

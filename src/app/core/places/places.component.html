@@ -2,50 +2,49 @@
          (mapRightClick)="rightClickOnMapNewPlaceInfoWindow($event, newPlaceInfoWindow)">
   <agm-info-window #newPlaceInfoWindow [latitude]="newPlaceInfoWindow.latitude"
                    [longitude]="newPlaceInfoWindow.longitude">
-    <a class="nav-link" [routerLink]="['/newPlace', newPlaceInfoWindow.latitude, newPlaceInfoWindow.longitude]" routerLinkActive="active"><i class="fa fa-plus-circle"></i><span
+    <a class="nav-link" [routerLink]="['/newPlace', newPlaceInfoWindow.latitude, newPlaceInfoWindow.longitude]"
+       routerLinkActive="active"><i class="fa fa-plus-circle"></i><span
       class="sr-only">(current)</span>&nbsp;Add new place here</a>
   </agm-info-window>
   <agm-marker *ngFor="let place of places | async"
               [latitude]="place.latitude"
               [longitude]="place.longitude"
               [iconUrl]="getCategoryImagePath(place.category)">
-    <agm-info-window [disableAutoPan]="true" #infoWindow>
-      <div class="agm-info-window-content container" style="max-width: 400px;">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="row">
-              <h4>{{place.name}}</h4>
+    <agm-info-window [disableAutoPan]="true" #infoWindow class="my-agm-info-window">
+      <div class="agm-info-window-content container disable-scroll">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="background-div" [ngStyle]="{'background-image': 'url(' + place.imagePath + ')'}">
             </div>
-            <div class="row">
-              <p>{{place.address}}</p>
-            </div>
-            <div class="row">
-              <p>Open time: {{place.openTime}} - {{place.closeTime}}</p>
-            </div>
-            <div class="row">
-              <p>Website:&nbsp;</p><a target="_blank" href="{{place.webUrl}}">{{ place.name }}</a>
-            </div>
-            <div *ngIf="auth.isSignedUp | async" class="row">
+          </div>
+          <br>
+          <div class="row">
+            <h4>{{place.name}}</h4>
+          </div>
+          <div class="row">
+            <p>{{place.address}}</p>
+          </div>
+          <div class="row">
+            <p>Open time: {{place.openTime}} - {{place.closeTime}}</p>
+          </div>
+          <div class="row">
+            <p>Website:&nbsp;</p><a target="_blank" href="{{place.webUrl}}">{{ place.name }}</a>
+          </div>
+          <div class="row">
+            <div *ngIf="auth.isSignedUp | async">
               <button type="button" class="btn btn-primary" [routerLink]="place.$key + '/details'"><i
                 class="fa fa-edit"></i>&nbsp;Edit
               </button>
             </div>
-            <br/>
-            <div *ngIf="auth.isSignedUp | async" class="row">
+            <div *ngIf="auth.isSignedUp | async">
               <button (click)="onAddToMyPlaces(place.$key, infoWindow)" class="btn btn-success"><i
                 class="fa fa-plus"></i>&nbsp;Add to my places
               </button>
             </div>
-            <br/>
-            <div class="row">
-              <p #successMessage class="text-success" [ngClass]="showMessage ? '' : 'hidden-xs-up'">Place successfully
-                added!</p>
-            </div>
           </div>
-          <div class="col-md-6">
-            <div class="row">
-              <img src="{{place.imagePath}}" alt="{{place.name}}" class="img-responsive"/>
-            </div>
+          <div class="row">
+            <p #successMessage class="text-success" [ngClass]="showMessage ? '' : 'hidden-xs-up'">Place successfully
+              added!</p>
           </div>
         </div>
       </div>
