@@ -2,10 +2,10 @@ agm-map {
   height: calc(89vh);
 }
 img {
-  max-height: 150px
+  max-height: 150px;
 }
 img:hover {
-  max-height: 600px;
+  max-height: 400px;
   position: fixed;
   transition: 0.5s ease-in-out;
 }

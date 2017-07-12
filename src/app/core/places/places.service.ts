@@ -17,22 +17,35 @@ import 'rxjs/add/operator/take';
 @Injectable()
 export class PlacesService {
   private places: FirebaseListObservable<Place[]>;
-  filterMyPlace: BehaviorSubject<boolean>;
+  filterPlaces: BehaviorSubject<string>;
 
   constructor(private afd: AngularFireDatabase, private auth: AuthService) {
     this.places = afd.list('/places');
   }
 
   getPlaces() {
-    return this.filterMyPlace.flatMap(isFiltered => {
-      if (isFiltered) {
-        return this.auth.getLoggedUser().
-        flatMap(user => this.places
-          .map(places => places.filter(place => user.places[place.$key] != null)));
-      } else {
-        return this.places;
+    return this.filterPlaces.flatMap(filter => {
+      switch (filter.split(':')[0]) {
+        case 'all':
+          return this.places;
+        case 'myPlaces':
+          return this.auth.getLoggedUser().flatMap(user => this.places
+            .map(places => places.filter(place => user.places[place.$key] != null)));
+        case 'category':
+          return this.filterPlacesForCategory(filter.split(':')[1]);
+        default:
+          return this.filterForText(filter.split(':')[0]);
       }
     });
+  }
+
+  filterPlacesForCategory(category: string) {
+    return this.places.map(places => places.filter(place => place.category == category));
+  }
+
+  filterForText(text: string) {
+    return this.places.map(places => places.filter((place: Place) =>
+      Object.values(place).join().toLowerCase().includes(text.toLowerCase())));
   }
 
   addToMyPlaces($key: string) {
