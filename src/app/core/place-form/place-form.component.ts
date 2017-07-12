@@ -24,6 +24,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
   placeForm: FormGroup;
   categories: string[];
   private invalidImageURL = 'assets/images/sad.png';
+  imageLoading: boolean;
 
   // Address controls and subscriptions for simple and reverse geocoding
   addressControl: AbstractControl;
@@ -71,6 +72,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
     });
 
     this.placeForm.get('imagePath').valueChanges.debounceTime(1000).subscribe((imageURL) => {
+      this.imageLoading = true;
       this.isValidImageURL(imageURL);
     });
   }
@@ -118,6 +120,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
       };
       img.onload = () => {
         this.imagePath = imageURL;
+        this.imageLoading = false;
       };
       img.src = imageURL;
     } else {
