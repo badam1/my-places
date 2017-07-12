@@ -9,6 +9,8 @@ import {User} from '../auth/user.model';
 import {Place} from '../core/place.model';
 import {PlacesService} from '../core/places/places.service';
 import {Router} from '@angular/router';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-profile',
@@ -31,16 +33,20 @@ export class ProfileComponent implements OnInit {
     this.auth.getLoggedUser().subscribe(user => {
       this.loggedUser = user;
       this.refreshLoggedUserPlaces();
-      this.profileForm.setValue({
-        'username': this.loggedUser.username,
-        'email': this.loggedUser.email,
-        'password': '',
-        'repeatPassword': ''
-      });
+        this.profileForm.setValue({
+          'username': this.loggedUser.username,
+          'email': this.loggedUser.email,
+          'password': '',
+          'repeatPassword': ''
+        });
     });
   }
 
   private refreshLoggedUserPlaces() {
+    // this.loggedInUserPlaces = this.auth.getLoggedUser().switchMap(user => {
+    //   return Observable.of(Object.keys(user.places)).mergeMap($key => this.placesService.getPlaceById($key));
+    // });
+
     Object.keys(this.loggedUser.places).map($key => {
       this.placesService.getPlaceById($key)
         .subscribe(place => {
@@ -75,14 +81,16 @@ export class ProfileComponent implements OnInit {
     this.auth.deleteUser();
   }
 
-  onOpenDetails(place: Place) {
+  onOpenDetails(place: Place, event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
     this.router.navigate([`places/${place.$key}/details`]);
   }
 
-  onRemovePlace(place: Place) {
-    this.loggedInUserPlaces.splice(this.loggedInUserPlaces.indexOf(place), 1);
+  onRemovePlace(place: Place, event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
     this.auth.removePlaceFromUser(place.$key);
-    this.refreshLoggedUserPlaces();
   }
 
   giveBootstrapValidationClassDiv(control: AbstractControl): string {

@@ -17,6 +17,7 @@ import {AuthService} from '../auth/auth.service';
 import {BootstrapValidationService} from '../shared/bootstrap-validation.service';
 import {AuthGuard} from '../auth/auth.guard';
 import {CategoriesService} from './categories.service';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {CategoriesService} from './categories.service';
     HeaderComponent,
     PlacesComponent,
     PlaceFormComponent,
-    NavBrandFlipDirective
+    NavBrandFlipDirective,
+    HomeComponent
   ],
   providers: [
     GeocodingApiService,

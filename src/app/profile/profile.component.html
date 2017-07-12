@@ -74,11 +74,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="link" *ngFor="let place of loggedInUserPlaces" (click)="onOpenDetails(place)">
+            <tr class="link" *ngFor="let place of loggedInUserPlaces" (click)="onOpenDetails(place,$event)">
               <td>{{ place.name }}</td>
               <td>{{ place.category }}</td>
               <td>{{ place.address }}</td>
-              <td><button class="btn btn-sm btn-danger"><i class="fa fa-trash" (click)="onRemovePlace(place)"></i></button></td>
+              <td><button class="btn btn-sm btn-danger"><i class="fa fa-trash" (click)="onRemovePlace(place, $event)"></i></button></td>
             </tr>
           </tbody>
         </table>
