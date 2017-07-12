@@ -11,6 +11,7 @@ import {AuthService} from '../../auth/auth.service';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
 
 
 @Injectable()
@@ -35,14 +36,17 @@ export class PlacesService {
   }
 
   addToMyPlaces($key: string) {
-    this.auth.getLoggedUser().subscribe(user => {
+    this.auth.getLoggedUser().take(1).subscribe(user => {
+      console.log('placeserviceTS');
       const userToUpdate = user;
+      // subscription.unsubscribe();
       if (userToUpdate.places == null) {
         userToUpdate.places = {};
         userToUpdate.places[$key] = true;
       } else {
         userToUpdate.places[$key] = true;
       }
+
       this.afd.object(`/users/${this.auth.getAuthCurrentUser().uid}`).update(userToUpdate);
     });
 

@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {AngularFireAuth} from 'angularfire2/auth';
-import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 
-import {User} from './user.model';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { User } from './user.model';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 @Injectable()
@@ -68,8 +68,8 @@ export class AuthService {
     this.signOutUser();
   }
 
-  removePlaceFromUser($key: string) {
-    this.afd.object(`/users/${this.getAuthCurrentUser().uid}/places/${$key}`).remove();
+  removePlaceFromUser($key: string): firebase.Promise<void> {
+    return this.afd.object(`/users/${this.getAuthCurrentUser().uid}/places/${$key}`).remove();
   }
 
   // ezt csak a guardokban kell hasznalni
