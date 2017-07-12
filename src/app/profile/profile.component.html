@@ -13,7 +13,8 @@
               <input type="text" id="username" class="form-control" formControlName="username"
                      [ngClass]="giveBootstrapValidationClassInput(profileForm.get('username'))"/>
             </div>
-            <p *ngIf="profileForm.get('username').touched && profileForm.get('username').hasError('required')" class="text-danger">Username is required</p>
+            <p *ngIf="profileForm.get('username').touched && profileForm.get('username').hasError('required')"
+               class="text-danger">Username is required</p>
           </div>
         </div>
         <div class="row">
@@ -23,7 +24,8 @@
               <input type="email" id="email" class="form-control" formControlName="email"
                      [ngClass]="giveBootstrapValidationClassInput(profileForm.get('email'))"/>
             </div>
-            <p *ngIf="profileForm.get('email').touched && profileForm.get('email').hasError('email')" class="text-danger">Please add a valid email</p>
+            <p *ngIf="profileForm.get('email').touched && profileForm.get('email').hasError('email')"
+               class="text-danger">Please add a valid email</p>
           </div>
         </div>
         <div class="row">
@@ -33,7 +35,9 @@
               <input type="password" id="password" class="form-control" formControlName="password"
                      [ngClass]="giveBootstrapValidationClassInput(profileForm.get('password'))"/>
             </div>
-            <p *ngIf="profileForm.get('password').touched && profileForm.get('password').hasError('mismatchedPasswords')" class="text-danger">The passwords doesn't match</p>
+            <p
+              *ngIf="profileForm.get('password').touched && profileForm.get('password').hasError('mismatchedPasswords')"
+              class="text-danger">The passwords doesn't match</p>
           </div>
         </div>
         <div class="row">
@@ -43,16 +47,42 @@
               <input type="password" id="repeatPassword" class="form-control" formControlName="repeatPassword"
                      [ngClass]="giveBootstrapValidationClassInput(profileForm.get('repeatPassword'))"/>
             </div>
-            <p *ngIf="profileForm.get('repeatPassword').touched && profileForm.get('repeatPassword').hasError('mismatchedPasswords')" class="text-danger">The passwords doesn't match</p>
+            <p
+              *ngIf="profileForm.get('repeatPassword').touched && profileForm.get('repeatPassword').hasError('mismatchedPasswords')"
+              class="text-danger">The passwords doesn't match</p>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <button [disabled]="!profileForm.valid" class="btn btn-success" type="submit">Save</button>
+            <button [disabled]="!profileForm.valid" class="btn btn-success" type="submit">Update</button>
             <button (click)="onDeleteAccount()" class="btn btn-danger" type="button">Delete Account</button>
           </div>
         </div>
       </form>
+    </div>
+    <div class="col-md-6">
+      <h3 class="text-center">Places</h3>
+      <br/>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>Place name</td>
+              <td>Category</td>
+              <td>Address</td>
+              <td>Remove</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="link" *ngFor="let place of loggedInUserPlaces" (click)="onOpenDetails(place)">
+              <td>{{ place.name }}</td>
+              <td>{{ place.category }}</td>
+              <td>{{ place.address }}</td>
+              <td><button class="btn btn-sm btn-danger"><i class="fa fa-trash" (click)="onRemovePlace(place)"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

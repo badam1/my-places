@@ -6,6 +6,9 @@ import {PasswordValidators} from 'ngx-validators';
 import {AuthService} from '../auth/auth.service';
 import {BootstrapValidationService} from '../shared/bootstrap-validation.service';
 import {User} from '../auth/user.model';
+import {Place} from '../core/place.model';
+import {PlacesService} from '../core/places/places.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -15,20 +18,34 @@ import {User} from '../auth/user.model';
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   loggedUser: User;
+  loggedInUserPlaces: Place[] = [];
 
-  constructor(public auth: AuthService, private bootstrapService: BootstrapValidationService) {
+  constructor(public auth: AuthService,
+              private bootstrapService: BootstrapValidationService,
+              private placesService: PlacesService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.initForm();
     this.auth.getLoggedUser().subscribe(user => {
       this.loggedUser = user;
+      this.refreshLoggedUserPlaces();
       this.profileForm.setValue({
         'username': this.loggedUser.username,
         'email': this.loggedUser.email,
         'password': '',
         'repeatPassword': ''
       });
+    });
+  }
+
+  private refreshLoggedUserPlaces() {
+    Object.keys(this.loggedUser.places).map($key => {
+      this.placesService.getPlaceById($key)
+        .subscribe(place => {
+          this.loggedInUserPlaces.push(place);
+        });
     });
   }
 
@@ -47,7 +64,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    let newUser: User = new User('','');
+    let newUser: User = new User('', '');
     const newProfileValues = this.profileForm.value;
     newUser.username = newProfileValues.username;
     newUser.email = newProfileValues.email;
@@ -56,6 +73,16 @@ export class ProfileComponent implements OnInit {
 
   onDeleteAccount() {
     this.auth.deleteUser();
+  }
+
+  onOpenDetails(place: Place) {
+    this.router.navigate([`places/${place.$key}/details`]);
+  }
+
+  onRemovePlace(place: Place) {
+    this.loggedInUserPlaces.splice(this.loggedInUserPlaces.indexOf(place), 1);
+    this.auth.removePlaceFromUser(place.$key);
+    this.refreshLoggedUserPlaces();
   }
 
   giveBootstrapValidationClassDiv(control: AbstractControl): string {

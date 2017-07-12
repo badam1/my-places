@@ -5,12 +5,12 @@ export class User {
 
   email: string;
   username: string;
-  places: number[];
+  places: {};
   // TODO imagePath for user
 
   constructor(email: string, username: string) {
     this.email = email;
     this.username = username;
-    this.places = [];
+    this.places = {};
   }
 }

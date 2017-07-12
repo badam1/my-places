@@ -10,10 +10,11 @@ import {AuthGuard} from './auth/auth.guard';
 const appRoutes: Routes = [
   {path: '', redirectTo: '/places', pathMatch: 'full'},
   {path: 'places', component: PlacesComponent},
-  {path: 'profile', component: ProfileComponent, canLoad: [AuthGuard], canActivate: [AuthGuard]},
-  {path: 'signup', component: SignUpComponent},
-  {path: 'signin', component: SignInComponent},
-  {path: 'placeform', component: PlaceFormComponent}
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'signup', component: SignUpComponent, canActivate: [AuthGuard]},
+  {path: 'signin', component: SignInComponent, canActivate: [AuthGuard]},
+  {path: 'newPlace', component: PlaceFormComponent, canActivate: [AuthGuard]},
+  {path: 'places/:key/details', component: PlaceFormComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

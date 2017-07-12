@@ -1,6 +1,9 @@
+import {enumerable, enumerableClassProperty} from '../shared/enumerable.decorator';
 /**
  * Created by sarmasagigy on 2017. 07. 11..
  */
+
+@enumerableClassProperty()
 export class Place {
   id: number;
   name: string;
@@ -18,34 +21,16 @@ export class Place {
   openTime: number;
   closeTime: number;
   category: string;
+
+  @enumerable(false)
+  $key: string;
   // TODO Rating
 
-  constructor(id: number,
-              name: string,
-              userEmail: string,
-              latitude: number,
-              longitude: number,
-              address: string,
-              description: string,
-              imagePath: string,
-              phoneNumber: string,
-              webUrl: string,
-              openTime: number,
-              closeTime: number,
-              category: string) {
-    this.id = id;
-    this.name = name;
-    this.userEmail = userEmail;
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.address = address;
-    this.description = description;
-    this.imagePath = imagePath;
-    this.phoneNumber = phoneNumber;
-    this.webUrl = webUrl;
-    this.openTime = openTime;
-    this.closeTime = closeTime;
-    this.category = category;
+  constructor(data?: Place) {
+    if (data != null) {
+      Object.assign(this, data);
+      this.$key = data.$key;
+    }
   }
 
 }

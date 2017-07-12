@@ -6,14 +6,23 @@ import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/databa
 import * as firebase from 'firebase/app';
 
 import {User} from './user.model';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 
 @Injectable()
 export class AuthService {
-  private _token: string;
   private loggedInUser: FirebaseObjectObservable<User>;
+  private _isSignedUp = new BehaviorSubject<boolean>(false);
 
   constructor(private afa: AngularFireAuth, private afd: AngularFireDatabase, private router: Router) {
+    afa.authState.subscribe(
+      (userObject: firebase.User) => {
+        if (userObject != null) {
+          this.loggedInUser = this.afd.object(`/users/${userObject.uid}`);
+        }
+        userObject == null ? this._isSignedUp.next(false) : this._isSignedUp.next(true);
+      });
   }
 
   signUpUser(email: string, username: string, password: string) {
@@ -27,7 +36,6 @@ export class AuthService {
       .then((response: firebase.User) => {
         console.log('firebase Auth promise response', response.toJSON());
         this.loggedInUser = this.afd.object(`/users/${this.getAuthCurrentUser().uid}`);
-        this.refreshToken();
         this.router.navigate(['/places']);
       })
       .catch(error => console.log(error));
@@ -35,7 +43,6 @@ export class AuthService {
 
   signOutUser() {
     this.afa.auth.signOut();
-    this._token = null;
     this.router.navigate(['/places']);
   }
 
@@ -47,11 +54,10 @@ export class AuthService {
     return this.loggedInUser;
   }
 
-  updateUser(updatedUser: User, newPassword: string) {
+  updateUser(updatedUser: User, newPassword?: string) {
     this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).update(updatedUser);
     this.afa.auth.currentUser.updateEmail(updatedUser.email);
     this.afa.auth.currentUser.updatePassword(newPassword);
-    this._token = null;
     this.afa.auth.signOut();
     this.router.navigate(['/signin']);
   }
@@ -59,20 +65,24 @@ export class AuthService {
   deleteUser() {
     this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).remove();
     this.afa.auth.currentUser.delete();
-    this._token = null;
     this.signOutUser();
   }
 
-  getToken(): string {
-    this.refreshToken();
-    return this._token;
+  removePlaceFromUser($key: string) {
+    this.afd.object(`/users/${this.getAuthCurrentUser().uid}/places/${$key}`).remove();
   }
 
-  isAuthenticated(): boolean {
-    return this._token != null;
+  // ezt csak a guardokban kell hasznalni
+  isAuthenticated(): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.afa.authState.map(user => !!user).subscribe(v => {
+        observer.next(v);
+        observer.complete();
+      });
+    });
   }
 
-  refreshToken() {
-    this.afa.auth.currentUser.getIdToken().then((token: string) => this._token = token);
+  get isSignedUp(): BehaviorSubject<boolean> {
+    return this._isSignedUp;
   }
 }

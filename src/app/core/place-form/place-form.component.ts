@@ -1,11 +1,14 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
-import { GeocodingApiService } from './geocoding.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs/Subscription';
+import {GeocodingApiService} from './geocoding.service';
 import 'rxjs/add/operator/debounceTime';
-import { BootstrapValidationService } from '../../shared/bootstrap-validation.service';
-import { CategoriesService } from '../categories.service';
-import { Observable } from 'rxjs/Observable';
+import {BootstrapValidationService} from '../../shared/bootstrap-validation.service';
+import {CategoriesService} from '../categories.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Place} from '../place.model';
+import {PlacesService} from '../places/places.service';
+import {CustomValidators} from 'ng2-validation';
 
 @Component({
   selector: 'app-place-form',
@@ -13,8 +16,9 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./place-form.component.css']
 })
 export class PlaceFormComponent implements OnInit, OnDestroy {
+  $key: string;
+  place: Place;
   imagePath: string;
-
   lat = 47.498924;
   lng = 19.040579;
   placeForm: FormGroup;
@@ -22,24 +26,31 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
   private invalidImageURL = 'assets/images/sad.png';
 
   // Address controls and subscriptions for simple and reverse geocoding
-  addressControl: any;
+  addressControl: AbstractControl;
   addressSubscription: Subscription;
 
   constructor(private geocodingAPIService: GeocodingApiService,
               private bootstrapService: BootstrapValidationService,
-              private categoriesService: CategoriesService) {
+              private categoriesService: CategoriesService,
+              private route: ActivatedRoute,
+              private placesService: PlacesService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.imagePath = this.invalidImageURL;
-
     this.initForm();
     this.prepareForGeocoding();
     this.categories = this.categoriesService.getCategories();
-  }
-
-  ngOnDestroy() {
-    this.addressSubscription.unsubscribe();
+    if (this.route.snapshot.params['key'] != null) {
+      this.route.params.subscribe((params: Params) => {
+        this.$key = params['key'];
+        this.placesService.getPlaceById(this.$key).subscribe(place => {
+          this.place = place;
+          this.fillUpFormWithCurrentPlace();
+        });
+      });
+    }
   }
 
   initForm() {
@@ -51,10 +62,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
       'imagePath': new FormControl(null, [Validators.required,
         Validators.pattern('(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)')]),
       'phoneNumber': new FormControl(null, [Validators.required]),
-      'webUrl': new FormControl(null, [Validators.required,
-        Validators.pattern('(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]' +
-          '\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.' +
-          '|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})')]),
+      'webUrl': new FormControl(null, [Validators.required, CustomValidators.url]),
       'openTime': new FormControl(null, [Validators.required]),
       'closeTime': new FormControl(null, [Validators.required]),
     });
@@ -64,12 +72,43 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  fillUpFormWithCurrentPlace() {
+    this.placeForm.setValue({
+      'name': this.place.name,
+      'description': this.place.description,
+      'address': this.place.address,
+      'category': this.place.category,
+      'imagePath': this.place.imagePath,
+      'phoneNumber': this.place.phoneNumber,
+      'webUrl': this.place.webUrl,
+      'openTime': this.place.openTime,
+      'closeTime': this.place.closeTime,
+    });
+  }
+
   onSubmit() {
-    console.log(this.placeForm);
+    if (this.route.snapshot.params['key'] != null) {
+      this.placesService.updatePlace(this.$key, this.placeForm.value);
+    } else {
+      const newPlace: Place = this.placeForm.value;
+      this.geocodingAPIService.findFromAddress(newPlace.address, '', 'Budapest', '', '', 'Hungary')
+        .subscribe(response => {
+          if (response.status === 'OK') {
+            newPlace.latitude = response.results[0].geometry.location.lat;
+            newPlace.longitude = response.results[0].geometry.location.lng;
+          } else if (response.status === 'ZERO_RESULTS') {
+            console.log('geocodingAPIService', 'ZERO_RESULTS', response.status);
+          } else {
+            console.log('geocodingAPIService', 'Other error', response.status);
+          }
+          this.placesService.addNewPlace(newPlace);
+        });
+    }
+    this.router.navigate(['places']);
   }
 
   isValidImageURL(imageURL: string) {
-    if (imageURL.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+    if (imageURL.match(/\.(jpeg|jpg|gif|png)/) != null) {
       const img = new Image();
       img.onerror = img.onabort = () => {
         this.imagePath = this.invalidImageURL;
@@ -143,4 +182,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
     ;
   }
 
+  ngOnDestroy() {
+    this.addressSubscription.unsubscribe();
+  }
 }
