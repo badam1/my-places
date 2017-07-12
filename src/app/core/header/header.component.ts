@@ -4,6 +4,9 @@ import {AuthService} from '../../auth/auth.service';
 import {CategoriesService} from '../categories.service';
 import {PlacesService} from '../places/places.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import 'rxjs/add/observable/fromEvent';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-header',
@@ -12,10 +15,11 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 })
 export class HeaderComponent implements OnInit {
   categories: string[];
-  private filterMyPlaces = new BehaviorSubject<boolean>(false);
+  private filterPlaces = new BehaviorSubject<string>('all');
+  private filterDebounceTimer: Subscription;
 
   constructor(public auth: AuthService, private categoriesService: CategoriesService, private placesService: PlacesService) {
-    placesService.filterMyPlace = this.filterMyPlaces;
+    placesService.filterPlaces = this.filterPlaces;
   }
 
   ngOnInit() {
@@ -23,11 +27,25 @@ export class HeaderComponent implements OnInit {
   }
 
   onFilterMyPlaces() {
-    this.filterMyPlaces.next(true);
+    this.filterPlaces.next('myPlaces');
+  }
+
+  onFilterByCategory(category: string) {
+    this.filterPlaces.next('category:' + category);
+  }
+
+  onSearch(event: KeyboardEvent) {
+    if (this.filterDebounceTimer != null) {
+      this.filterDebounceTimer.unsubscribe();
+    }
+    this.filterDebounceTimer = new TimerObservable(300).subscribe(() => {
+      this.filterPlaces.next((<HTMLInputElement>event.srcElement).value);
+      this.filterDebounceTimer = null;
+    });
   }
 
   removeFilterMyPlaces() {
-    this.filterMyPlaces.next(false);
+    this.filterPlaces.next('all');
   }
 
   onSignOut() {

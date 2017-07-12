@@ -18,7 +18,6 @@ export class PlacesComponent implements OnInit {
   // BUDAPEST
   lat = 47.498924;
   lng = 19.040579;
-  //places: FirebaseListObservable<Place[]>;
   places: Observable<Place[]>;
   showMessage = false;
 
