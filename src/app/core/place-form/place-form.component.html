@@ -53,7 +53,7 @@
             <div class="form-group">
               <h5>Click on map for address</h5>
               <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15" (mapClick)="realtimeReverseGeocoding($event)">
-                <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="getCategoryImagePath(category.value)">
+                <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="getCategoryImagePath(placeForm.get('category').value)">
                 </agm-marker>
               </agm-map>
             </div>
@@ -68,9 +68,7 @@
                 id="category"
                 formControlName="category"
                 class="form-control"
-                #category
-                [ngClass]="giveBootstrapValidationClassInput(placeForm.get('category'))"
-              >
+                [ngClass]="giveBootstrapValidationClassInput(placeForm.get('category'))">
                 <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
               </select>
             </div>

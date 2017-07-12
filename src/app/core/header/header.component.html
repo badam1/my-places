@@ -5,7 +5,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <a class="navbar-brand text-uppercase" (click)="onFilterMyPlaces()" appNavBrandFlip>
+  <a class="navbar-brand text-uppercase" routerLink="places" (click)="onFilterMyPlaces()" appNavBrandFlip>
     <img src="assets/images/my-places-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
     <span style="margin-left: -7px">My Places</span>
   </a>
@@ -13,16 +13,20 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="places" routerLinkActive="active" (click)="removeFilterMyPlaces()"><i class="fa fa-home"></i> Places<span
-          class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink="home" routerLinkActive="active"><i class="fa fa-home"></i><span
+          class="sr-only">(current)</span>&nbsp;Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="places" routerLinkActive="active" (click)="removeFilterMyPlaces()"><i class="fa fa-map-marker"></i><span
+          class="sr-only">(current)</span>&nbsp;Places</a>
       </li>
       <li *ngIf="auth.isSignedUp | async" class="nav-item">
-        <a class="nav-link" routerLink="newPlace" routerLinkActive="active"><i class="fa fa-plus-circle"></i> Add new place<span
-          class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink="newPlace" routerLinkActive="active"><i class="fa fa-plus-circle"></i><span
+          class="sr-only">(current)</span>&nbsp;Add new place</a>
       </li>
       <li class="nav-item dropdown" appDropdown="">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false"><i class="fa fa-list"></i> Categories</a>
+           aria-expanded="false"><i class="fa fa-list"></i>&nbsp;Categories</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
           <a class="dropdown-item" *ngFor="let cat of categories">{{cat}}</a>
         </div>

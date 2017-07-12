@@ -1,0 +1,9 @@
+.jumbotron {
+  background: url('/assets/images/budapest.jpg') center no-repeat;
+  background-size: cover;
+  color: white;
+  height: calc(40vh);
+}
+.jumbotron h1 {
+  font-size: 5em;
+}

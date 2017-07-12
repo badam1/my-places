@@ -20,7 +20,7 @@
               <p>Website:&nbsp;</p><a target="_blank" href="{{place.webUrl}}">{{ place.name }}</a>
             </div>
             <div *ngIf="auth.isSignedUp | async" class="row">
-              <button type="button" class="btn btn-primary" [routerLink]="place.$key + '/details'">Details</button>
+              <button type="button" class="btn btn-primary" [routerLink]="place.$key + '/details'"><i class="fa fa-edit"></i>&nbsp;Edit</button>
             </div>
             <br/>
             <div *ngIf="auth.isSignedUp | async" class="row">
