@@ -31,15 +31,19 @@
             <p>Website:&nbsp;</p><a target="_blank" href="{{place.webUrl}}">{{ place.name }}</a>
           </div>
           <div class="row">
-            <div *ngIf="auth.isSignedUp | async">
-              <button type="button" class="btn btn-primary" [routerLink]="place.$key + '/details'"><i
-                class="fa fa-edit"></i>&nbsp;Edit
-              </button>
+            <div class="col-xs-6">
+              <div *ngIf="auth.isSignedUp | async">
+                <button type="button" class="btn btn-primary" [routerLink]="place.$key + '/details'"><i
+                  class="fa fa-edit"></i>&nbsp;Edit
+                </button>
+              </div>
             </div>
-            <div *ngIf="auth.isSignedUp | async">
-              <button (click)="onAddToMyPlaces(place.$key, infoWindow)" class="btn btn-success"><i
-                class="fa fa-plus"></i>&nbsp;Add to my places
-              </button>
+            <div class="col-xs-5 offset-1">
+              <div *ngIf="auth.isSignedUp | async">
+                <button (click)="onAddToMyPlaces(place.$key, infoWindow)" class="btn btn-success"><i
+                  class="fa fa-plus"></i>&nbsp;To my places
+                </button>
+              </div>
             </div>
           </div>
           <div class="row">
