@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs/Subscription';
-import {GeocodingApiService} from './geocoding.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import { GeocodingApiService } from './geocoding.service';
 import 'rxjs/add/operator/debounceTime';
-import {BootstrapValidationService} from '../../shared/bootstrap-validation.service';
-import {CategoriesService} from '../categories.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Place} from '../place.model';
-import {PlacesService} from '../places/places.service';
-import {CustomValidators} from 'ng2-validation';
+import { BootstrapValidationService } from '../../shared/bootstrap-validation.service';
+import { CategoriesService } from '../categories.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Place } from '../place.model';
+import { PlacesService } from '../places/places.service';
+import { CustomValidators } from 'ng2-validation';
 
 @Component({
   selector: 'app-place-form',
@@ -50,6 +50,9 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
           this.fillUpFormWithCurrentPlace();
         });
       });
+    } else if (this.route.snapshot.params['lat'] != null && this.route.snapshot.params['lng'] != null) {
+      // IF GET COORDS IN ROUTING PARAMETER, than call reverse geocoding function with that params.
+      this.realtimeReverseGeocoding(+this.route.snapshot.params['lat'], +this.route.snapshot.params['lng']);
     }
   }
 
@@ -160,9 +163,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  realtimeReverseGeocoding($event: any) {
-    const lat = $event.coords.lat;
-    const lng = $event.coords.lng;
+  realtimeReverseGeocoding(lat: number, lng: number) {
 
     this.lat = lat;
     this.lng = lng;

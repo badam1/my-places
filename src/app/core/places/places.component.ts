@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {AgmInfoWindow} from '@agm/core';
+import { Component, OnInit } from '@angular/core';
+import { AgmInfoWindow } from '@agm/core';
 
-import {Place} from '../place.model';
-import {PlacesService} from './places.service';
-import {FirebaseListObservable} from 'angularfire2/database';
-import {AuthService} from '../../auth/auth.service';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
-import {CategoriesService} from '../categories.service';
-import {Observable} from 'rxjs/Observable';
+import { Place } from '../place.model';
+import { PlacesService } from './places.service';
+import { FirebaseListObservable } from 'angularfire2/database';
+import { AuthService } from '../../auth/auth.service';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { CategoriesService } from '../categories.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-places',
@@ -21,7 +21,7 @@ export class PlacesComponent implements OnInit {
   places: Observable<Place[]>;
   showMessage = false;
 
-  constructor(private placesService: PlacesService, public auth: AuthService,private categoriesService:CategoriesService) {
+  constructor(private placesService: PlacesService, public auth: AuthService, private categoriesService: CategoriesService) {
   }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class PlacesComponent implements OnInit {
   onAddToMyPlaces($key: string, infoWindow: AgmInfoWindow) {
     this.placesService.addToMyPlaces($key);
     this.showMessage = true;
-    new TimerObservable(3000).subscribe(()=> {
+    new TimerObservable(3000).subscribe(() => {
       this.showMessage = false;
       infoWindow.close();
     });
@@ -39,5 +39,16 @@ export class PlacesComponent implements OnInit {
 
   getCategoryImagePath(category: string) {
     return this.categoriesService.getCategoryImagePath(category);
+  }
+
+  rightClickOnMapNewPlaceInfoWindow($event, infoWindow: AgmInfoWindow) {
+    if (this.auth.isSignedUp.value) {
+      infoWindow.latitude = $event.coords.lat;
+      infoWindow.longitude = $event.coords.lng;
+      infoWindow.open();
+    } else {
+      console.log('not signed in');
+    }
+
   }
 }

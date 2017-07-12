@@ -1,4 +1,10 @@
-<agm-map class="agm-map" [latitude]="lat" [longitude]="lng" [zoom]="14">
+<agm-map class="agm-map" [latitude]="lat" [longitude]="lng" [zoom]="14"
+         (mapRightClick)="rightClickOnMapNewPlaceInfoWindow($event, newPlaceInfoWindow)">
+  <agm-info-window #newPlaceInfoWindow [latitude]="newPlaceInfoWindow.latitude"
+                   [longitude]="newPlaceInfoWindow.longitude">
+    <a class="nav-link" [routerLink]="['/newPlace', newPlaceInfoWindow.latitude, newPlaceInfoWindow.longitude]" routerLinkActive="active"><i class="fa fa-plus-circle"></i><span
+      class="sr-only">(current)</span>&nbsp;Add new place here</a>
+  </agm-info-window>
   <agm-marker *ngFor="let place of places | async"
               [latitude]="place.latitude"
               [longitude]="place.longitude"
@@ -20,15 +26,20 @@
               <p>Website:&nbsp;</p><a target="_blank" href="{{place.webUrl}}">{{ place.name }}</a>
             </div>
             <div *ngIf="auth.isSignedUp | async" class="row">
-              <button type="button" class="btn btn-primary" [routerLink]="place.$key + '/details'"><i class="fa fa-edit"></i>&nbsp;Edit</button>
+              <button type="button" class="btn btn-primary" [routerLink]="place.$key + '/details'"><i
+                class="fa fa-edit"></i>&nbsp;Edit
+              </button>
             </div>
             <br/>
             <div *ngIf="auth.isSignedUp | async" class="row">
-              <button (click)="onAddToMyPlaces(place.$key, infoWindow)" class="btn btn-success"><i class="fa fa-plus" ></i>&nbsp;Add to my places</button>
+              <button (click)="onAddToMyPlaces(place.$key, infoWindow)" class="btn btn-success"><i
+                class="fa fa-plus"></i>&nbsp;Add to my places
+              </button>
             </div>
             <br/>
             <div class="row">
-              <p #successMessage class="text-success" [ngClass]="showMessage ? '' : 'hidden-xs-up'">Place successfully added!</p>
+              <p #successMessage class="text-success" [ngClass]="showMessage ? '' : 'hidden-xs-up'">Place successfully
+                added!</p>
             </div>
           </div>
           <div class="col-md-6">

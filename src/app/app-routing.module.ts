@@ -16,6 +16,7 @@ const appRoutes: Routes = [
   {path: 'signup', component: SignUpComponent, canActivate: [AuthGuard]},
   {path: 'signin', component: SignInComponent, canActivate: [AuthGuard]},
   {path: 'newPlace', component: PlaceFormComponent, canActivate: [AuthGuard]},
+  {path: 'newPlace/:lat/:lng', component: PlaceFormComponent, canActivate: [AuthGuard]},
   {path: 'places/:key/details', component: PlaceFormComponent, canActivate: [AuthGuard]}
 ];
 

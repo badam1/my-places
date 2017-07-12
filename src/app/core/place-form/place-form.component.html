@@ -52,7 +52,7 @@
           <div class="col-xs-12 col-md-12">
             <div class="form-group">
               <h5>Click on map for address</h5>
-              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15" (mapClick)="realtimeReverseGeocoding($event)">
+              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15" (mapClick)="realtimeReverseGeocoding($event.coords.lat, $event.coords.lng)">
                 <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="getCategoryImagePath(placeForm.get('category').value)">
                 </agm-marker>
               </agm-map>
