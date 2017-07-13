@@ -28,7 +28,9 @@ export class HeaderComponent implements OnInit {
   }
 
   onFilterMyPlaces() {
-    this.filterPlaces.next('myPlaces');
+    if (this.auth.getLoggedUser()) {
+      this.filterPlaces.next('myPlaces');
+    }
   }
 
   onFilterByCategory(category: string) {

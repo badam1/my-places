@@ -18,9 +18,13 @@ export class SignUpComponent {
     const email = signUpForm.value.email;
     const password = signUpForm.value.password;
     const username = signUpForm.value.username;
-    this.auth.signUpUser(email, username, password);
-    signUpForm.reset();
-    this.router.navigate(['/home']);
+    this.auth.signUpUser(email, username, password).then(
+      (response) => {
+        console.log(response);
+        signUpForm.reset();
+        this.router.navigate(['/home']);
+      }
+    ).catch(alert);
   }
 
   giveBootstrapValidationClassDiv(control: AbstractControl): string {
