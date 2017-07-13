@@ -19,7 +19,6 @@ import {BootstrapValidationService} from '../shared/bootstrap-validation.service
 import {AuthGuard} from '../auth/auth.guard';
 import {CategoriesService} from './categories.service';
 import {HomeComponent} from './home/home.component';
-import {NavbarOpacityDirective} from './header/navbar-opacity.directive';
 
 @NgModule({
   imports: [
@@ -39,7 +38,6 @@ import {NavbarOpacityDirective} from './header/navbar-opacity.directive';
     PlacesComponent,
     PlaceFormComponent,
     NavBrandFlipDirective,
-    NavbarOpacityDirective,
     HomeComponent
   ],
   providers: [

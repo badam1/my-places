@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {DropdownDirective} from './app-drop-down.directive';
-import { CloseDropdownDirective } from './close-dropdown.directive';
 
 @NgModule({
   imports: [
@@ -9,7 +8,6 @@ import { CloseDropdownDirective } from './close-dropdown.directive';
   ],
   declarations: [
     DropdownDirective,
-    CloseDropdownDirective
   ],
   exports: [
     DropdownDirective
