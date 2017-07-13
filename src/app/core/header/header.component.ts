@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   private filterDebounceTimer: Subscription;
 
   constructor(public auth: AuthService, private categoriesService: CategoriesService, private placesService: PlacesService) {
-    placesService.filterPlaces = this.filterPlaces;
+    this.placesService.filterPlaces = this.filterPlaces;
   }
 
   ngOnInit() {

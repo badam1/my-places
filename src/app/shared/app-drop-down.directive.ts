@@ -10,13 +10,13 @@ export class DropdownDirective {
   constructor() { }
 
   @HostListener('click', ['$event'])
-  onLocalClick(event: Event) {
+  onLocalClick() {
     this.thisElementClicked = true;
     this.isShow = !this.isShow;
   }
 
   @HostListener('document:click', ['$event'])
-  onClick(event: Event) {
+  onClick() {
     if (!this.thisElementClicked) {
      this.isShow = false;
     }

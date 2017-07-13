@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AgmInfoWindow } from '@agm/core';
+import {Component, OnInit} from '@angular/core';
+import {AgmInfoWindow} from '@agm/core';
 
-import { Place } from '../place.model';
-import { PlacesService } from './places.service';
-import { FirebaseListObservable } from 'angularfire2/database';
-import { AuthService } from '../../auth/auth.service';
-import { TimerObservable } from 'rxjs/observable/TimerObservable';
-import { CategoriesService } from '../categories.service';
-import { Observable } from 'rxjs/Observable';
+import {Place} from '../place.model';
+import {PlacesService} from './places.service';
+import {AuthService} from '../../auth/auth.service';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import {CategoriesService} from '../categories.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-places',
