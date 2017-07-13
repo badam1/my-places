@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {HttpModule} from '@angular/http';
 
 import {AgmCoreModule} from '@agm/core';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import {HeaderComponent} from './header/header.component';
 import {PlacesComponent} from './places/places.component';
@@ -30,6 +31,7 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    CollapseModule.forRoot(),
   ],
   declarations: [
     HeaderComponent,

@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 
 import {AngularFireModule} from 'angularfire2';
 
+
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {ProfileModule} from './profile/profile.module';

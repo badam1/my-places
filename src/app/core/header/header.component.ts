@@ -14,6 +14,7 @@ import {Subscription} from 'rxjs/Subscription';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  isCollapsed:boolean = false;
   categories: string[];
   private filterPlaces = new BehaviorSubject<string>('all');
   private filterDebounceTimer: Subscription;
@@ -42,6 +43,14 @@ export class HeaderComponent implements OnInit {
       this.filterPlaces.next((<HTMLInputElement>event.srcElement).value);
       this.filterDebounceTimer = null;
     });
+  }
+
+  public collapsed(event:any):void {
+    console.log(event);
+  }
+
+  public expanded(event:any):void {
+    console.log(event);
   }
 
   removeFilterMyPlaces() {
