@@ -8,6 +8,7 @@ import {SignInComponent} from './sign-in/sign-in.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {SharedModule} from '../shared/shared.module';
+import {NotFoundComponent} from './not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import {SharedModule} from '../shared/shared.module';
   declarations: [
     SignUpComponent,
     SignInComponent,
+    NotFoundComponent,
   ],
 })
 export class AuthModule {

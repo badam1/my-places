@@ -7,6 +7,7 @@ import {SignInComponent} from './auth/sign-in/sign-in.component';
 import {PlaceFormComponent} from 'app/core/place-form/place-form.component';
 import {AuthGuard} from './auth/auth.guard';
 import {HomeComponent} from './core/home/home.component';
+import {NotFoundComponent} from './auth/not-found/not-found.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/about', pathMatch: 'full'},
@@ -18,7 +19,8 @@ const appRoutes: Routes = [
   {path: 'newPlace', component: PlaceFormComponent, canActivate: [AuthGuard]},
   {path: 'newPlace/:lat/:lng', component: PlaceFormComponent, canActivate: [AuthGuard]},
   {path: 'places/:key/details', component: PlaceFormComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: '/about'}
+  {path: 'not-found', component: NotFoundComponent},
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({
