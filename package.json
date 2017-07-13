@@ -29,6 +29,7 @@
     "font-awesome": "^4.7.0",
     "fontawesome": "^4.7.2",
     "ng2-validation": "^4.2.0",
+    "ngx-bootstrap": "^1.7.1",
     "ngx-validators": "^3.0.0",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
