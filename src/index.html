@@ -4,11 +4,35 @@
   <meta charset="utf-8">
   <title>MyPlaces</title>
   <base href="/">
+  <style>
+    .loading-div{
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      position:fixed;
+    }
+    .rolling-image{
+      max-width: 100%;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
 
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="./assets/icons/rsz_restaurant.png">
 </head>
 <body>
-  <app-root></app-root>
+<app-root>
+  <div class="loading-div text-center"><img src="./assets/images/restaurant.png" class="rolling-image"></div>
+</app-root>
 </body>
 </html>
