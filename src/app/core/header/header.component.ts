@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs/Subscription';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isCollapsed: boolean = false;
+  isCollapsed = false;
   categories: string[];
   private filterPlaces = new BehaviorSubject<string>('all');
   private filterDebounceTimer: Subscription;

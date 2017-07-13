@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {HttpModule} from '@angular/http';
 
 import {AgmCoreModule} from '@agm/core';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
+import {CollapseModule} from 'ngx-bootstrap/collapse';
 
 import {HeaderComponent} from './header/header.component';
 import {PlacesComponent} from './places/places.component';
@@ -18,7 +18,8 @@ import {AuthService} from '../auth/auth.service';
 import {BootstrapValidationService} from '../shared/bootstrap-validation.service';
 import {AuthGuard} from '../auth/auth.guard';
 import {CategoriesService} from './categories.service';
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
+import {NavbarOpacityDirective} from './header/navbar-opacity.directive';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { HomeComponent } from './home/home.component';
     PlacesComponent,
     PlaceFormComponent,
     NavBrandFlipDirective,
+    NavbarOpacityDirective,
     HomeComponent
   ],
   providers: [
