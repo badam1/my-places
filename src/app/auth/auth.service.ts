@@ -26,9 +26,9 @@ export class AuthService {
   }
 
   signUpUser(email: string, username: string, password: string) {
-    this.afa.auth.createUserWithEmailAndPassword(email, password)
-      .catch(error => console.log(error));
-    this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).set(new User(email, username));
+    this.afa.auth.createUserWithEmailAndPassword(email, password).then(()=>
+      this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).set(new User(email, username))
+  ).catch(error => console.log(error));
   }
 
   signInUser(email: string, password: string) {

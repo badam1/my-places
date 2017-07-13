@@ -20,7 +20,7 @@ export class SignUpComponent {
     const username = signUpForm.value.username;
     this.auth.signUpUser(email, username, password);
     signUpForm.reset();
-    this.router.navigate(['/signin']);
+    this.router.navigate(['/home']);
   }
 
   giveBootstrapValidationClassDiv(control: AbstractControl): string {
