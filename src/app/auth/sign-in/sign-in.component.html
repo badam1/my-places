@@ -6,7 +6,8 @@
       <form (ngSubmit)="onSignIn(signInForm)" #signInForm="ngForm">
         <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(email)">
           <label for="email">Email</label>
-          <input type="text" id="email" name="email" class="form-control" #email="ngModel" required="required" ngModel
+          <input type="text" id="email" name="email" class="form-control" #email="ngModel" required="required" email
+                 ngModel
                  [ngClass]="giveBootstrapValidationClassInput(email)">
         </div>
         <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(password)">

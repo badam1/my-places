@@ -18,7 +18,7 @@ export class SignInComponent {
   onSignIn(signInForm: NgForm) {
     const email = signInForm.value.email;
     const password = signInForm.value.password;
-    this.auth.signInUser(email,password);
+    this.auth.signInUser(email, password);
     signInForm.reset();
   }
 
