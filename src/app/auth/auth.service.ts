@@ -33,8 +33,7 @@ export class AuthService {
 
   signInUser(email: string, password: string) {
     this.afa.auth.signInWithEmailAndPassword(email, password)
-      .then((response: firebase.User) => {
-        console.log('firebase Auth promise response', response.toJSON());
+      .then(() => {
         this.loggedInUser = this.afd.object(`/users/${this.getAuthCurrentUser().uid}`);
         this.router.navigate(['/places']);
       })

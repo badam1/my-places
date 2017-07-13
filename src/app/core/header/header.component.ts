@@ -47,14 +47,6 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  public collapsed(event: any): void {
-    console.log(event);
-  }
-
-  public expanded(event: any): void {
-    console.log(event);
-  }
-
   removeFilterMyPlaces() {
     this.filterPlaces.next('all');
   }

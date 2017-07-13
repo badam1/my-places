@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { PasswordValidators } from 'ngx-validators';
+import {PasswordValidators} from 'ngx-validators';
 
-import { AuthService } from '../auth/auth.service';
-import { BootstrapValidationService } from '../shared/bootstrap-validation.service';
-import { User } from '../auth/user.model';
-import { Place } from '../core/place.model';
-import { PlacesService } from '../core/places/places.service';
-import { Router } from '@angular/router';
+import {AuthService} from '../auth/auth.service';
+import {BootstrapValidationService} from '../shared/bootstrap-validation.service';
+import {User} from '../auth/user.model';
+import {Place} from '../core/place.model';
+import {PlacesService} from '../core/places/places.service';
+import {Router} from '@angular/router';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/switchMap';
-import { Subscription } from 'rxjs/Subscription';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/take';
 
 @Component({
@@ -34,8 +34,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForm();
     this.subscription = this.auth.getLoggedUser().take(1).subscribe(user => {
-      console.log('profilecomponentTS');
-      // this.loggedUser = user;
       this.refreshLoggedUserPlaces();
       this.profileForm.setValue({
         'username': user.username,
@@ -48,7 +46,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    console.log('ondestroy');
   }
 
   private refreshLoggedUserPlaces() {

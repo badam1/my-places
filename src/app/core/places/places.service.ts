@@ -50,7 +50,6 @@ export class PlacesService {
 
   addToMyPlaces($key: string) {
     this.auth.getLoggedUser().take(1).subscribe(user => {
-      console.log('placeserviceTS');
       const userToUpdate = user;
       // subscription.unsubscribe();
       if (userToUpdate.places == null) {

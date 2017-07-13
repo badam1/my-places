@@ -7,14 +7,13 @@ video {
   width: auto;
   height: auto;
   z-index: -100;
-  border: 1px solid;
   transform: translateX(-50%);
 }
 
 @media screen and (min-width: 720px) {
 
   .text {
-    color: #C30E2E;
+    color: #1976D2;
     font-weight: 800;
     font-size: x-large;
     margin-top: 20px;
@@ -33,7 +32,6 @@ video {
     width: auto;
     height: auto;
     z-index: -100;
-    border: 1px solid;
     transform: translateX(-50%);
   }
 }
@@ -48,13 +46,12 @@ video {
     width: auto;
     height: auto;
     z-index: -100;
-    border: 1px solid;
     transform: translateX(-50%);
   }
 }
 
 
 .text {
-  color: #C30E2E;
+  color: #1976D2;
   margin-top: 20px;
 }

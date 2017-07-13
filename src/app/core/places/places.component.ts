@@ -45,8 +45,6 @@ export class PlacesComponent implements OnInit {
       infoWindow.latitude = $event.coords.lat;
       infoWindow.longitude = $event.coords.lng;
       infoWindow.open();
-    } else {
-      console.log('not signed in');
     }
 
   }
