@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 })
 export class NavbarOpacityDirective {
   @HostBinding('style.opacity') opacity = 1;
+  @HostBinding('style.transition') transition = '.4s ease-in-out';
 
   constructor(private router: Router) {
   }
