@@ -16,4 +16,9 @@ agm-map {
   width: 300px;
 }
 
-
+app-alert {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

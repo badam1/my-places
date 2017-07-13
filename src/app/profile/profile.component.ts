@@ -21,7 +21,6 @@ import 'rxjs/add/operator/take';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
-  loggedUser: User;
   loggedInUserPlaces: Place[] = [];
   subscription: Subscription;
 
@@ -56,11 +55,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.auth.getLoggedUser().take(1).subscribe(user => {
       this.loggedInUserPlaces = [];
       if (user.places != null) {
-        console.log('empty');
         Object.keys(user.places).map($key => {
           this.placesService.getPlaceById($key)
             .subscribe(place => {
-              this.loggedInUserPlaces.push(place);
+              if (place.name) {
+                this.loggedInUserPlaces.push(place);
+              } else {
+                this.onRemovePlace(place);
+              }
             });
         });
       }
@@ -99,9 +101,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.router.navigate([`places/${place.$key}/details`]);
   }
 
-  onRemovePlace(place: Place, event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
+  onRemovePlace(place: Place) {
     this.auth.removePlaceFromUser(place.$key).then(() => {
       this.refreshLoggedUserPlaces();
     });

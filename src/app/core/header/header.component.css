@@ -58,3 +58,9 @@ a:hover, a.nav-link:hover {
   width: 100%;
 }
 
+app-alert {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

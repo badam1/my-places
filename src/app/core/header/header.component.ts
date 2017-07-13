@@ -8,6 +8,7 @@ import 'rxjs/add/observable/fromEvent';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
 import {Subscription} from 'rxjs/Subscription';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -19,7 +20,8 @@ export class HeaderComponent implements OnInit {
   private filterPlaces = new BehaviorSubject<string>('all');
   private filterDebounceTimer: Subscription;
 
-  constructor(public auth: AuthService, private categoriesService: CategoriesService, private placesService: PlacesService) {
+  constructor(public auth: AuthService, private categoriesService: CategoriesService,
+              private placesService: PlacesService) {
     this.placesService.filterPlaces = this.filterPlaces;
   }
 

@@ -155,8 +155,14 @@
           </div>
         </div>
         <br/>
+        <div class="col-md-6 offset-3 text-center">
+          <app-alert></app-alert>
+        </div>
         <div class="col-md-12 text-center">
           <button type="submit" class="btn btn-success btn-lg" [disabled]="!placeForm.valid">Save place</button>
+          <button type="button" class="btn btn-danger btn-lg" [ngClass]="editmode ? '' : 'hidden-xs-up'"
+                  (click)="onDeletePlace(place.$key)">Delete place
+          </button>
         </div>
         <br/><br/>
       </form>

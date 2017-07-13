@@ -28,16 +28,15 @@ export class AuthService {
   signUpUser(email: string, username: string, password: string) {
     return this.afa.auth.createUserWithEmailAndPassword(email, password).then(() =>
       this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).set(new User(email, username))
-    ).catch(error => console.log(error));
+    );
   }
 
   signInUser(email: string, password: string) {
-    this.afa.auth.signInWithEmailAndPassword(email, password)
+    return this.afa.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.loggedInUser = this.afd.object(`/users/${this.getAuthCurrentUser().uid}`);
         this.router.navigate(['/places']);
-      })
-      .catch(error => console.log(error));
+      });
   }
 
   signOutUser() {

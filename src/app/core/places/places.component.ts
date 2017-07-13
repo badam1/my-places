@@ -7,6 +7,8 @@ import {AuthService} from '../../auth/auth.service';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
 import {CategoriesService} from '../categories.service';
 import {Observable} from 'rxjs/Observable';
+import {AlertService} from '../../shared/alert/alert.service';
+import {Alert} from '../../shared/alert/alert';
 
 @Component({
   selector: 'app-places',
@@ -18,9 +20,9 @@ export class PlacesComponent implements OnInit {
   lat = 47.498924;
   lng = 19.040579;
   places: Observable<Place[]>;
-  showMessage = false;
 
-  constructor(private placesService: PlacesService, public auth: AuthService, private categoriesService: CategoriesService) {
+  constructor(private placesService: PlacesService, public auth: AuthService,
+              private categoriesService: CategoriesService, private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -29,9 +31,8 @@ export class PlacesComponent implements OnInit {
 
   onAddToMyPlaces($key: string, infoWindow: AgmInfoWindow) {
     this.placesService.addToMyPlaces($key);
-    this.showMessage = true;
+    this.alertService.showAlert.next(new Alert('INFO', 'Place successfully saved to your places', 'alert-info'));
     new TimerObservable(3000).subscribe(() => {
-      this.showMessage = false;
       infoWindow.close();
     });
   }
@@ -46,6 +47,5 @@ export class PlacesComponent implements OnInit {
       infoWindow.longitude = $event.coords.lng;
       infoWindow.open();
     }
-
   }
 }

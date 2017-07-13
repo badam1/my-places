@@ -40,7 +40,7 @@ export class PlacesService {
   }
 
   filterPlacesForCategory(category: string) {
-    return this.places.map(places => places.filter(place => place.category == category));
+    return this.places.map(places => places.filter(place => place.category === category));
   }
 
   filterForText(text: string) {
@@ -70,6 +70,10 @@ export class PlacesService {
 
   updatePlace($key: string, updatedPlace: Place) {
     this.places.update($key, updatedPlace);
+  }
+
+  deletePlace($key: string) {
+    this.places.remove($key);
   }
 
   getPlaceById($key: string): FirebaseObjectObservable<Place> {

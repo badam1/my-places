@@ -3,6 +3,8 @@ import {AbstractControl, NgForm} from '@angular/forms';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {BootstrapValidationService} from '../../shared/bootstrap-validation.service';
+import {AlertService} from '../../shared/alert/alert.service';
+import {Alert} from '../../shared/alert/alert';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,14 +12,17 @@ import {BootstrapValidationService} from '../../shared/bootstrap-validation.serv
 })
 export class SignUpComponent {
 
-  constructor(private auth: AuthService, private router: Router, private bootstrapService: BootstrapValidationService) {
+  constructor(private auth: AuthService, private router: Router, private bootstrapService: BootstrapValidationService, private alertService: AlertService) {
   }
 
   onSignUp(signUpForm: NgForm) {
     const email = signUpForm.value.email;
     const password = signUpForm.value.password;
     const username = signUpForm.value.username;
-    this.auth.signUpUser(email, username, password).then(
+    this.auth.signUpUser(email, username, password).catch((error) => {
+      console.log(error);
+      this.alertService.showAlert.next(new Alert('ERROR', 'Something wrong with the given data! Please try again', 'alert-danger'));
+    }).then(
       () => {
         signUpForm.reset();
         this.router.navigate(['/home']);

@@ -1,14 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
-import { GeocodingApiService } from './geocoding.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs/Subscription';
+import {GeocodingApiService} from './geocoding.service';
 import 'rxjs/add/operator/debounceTime';
-import { BootstrapValidationService } from '../../shared/bootstrap-validation.service';
-import { CategoriesService } from '../categories.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Place } from '../place.model';
-import { PlacesService } from '../places/places.service';
-import { CustomValidators } from 'ng2-validation';
+import {BootstrapValidationService} from '../../shared/bootstrap-validation.service';
+import {CategoriesService} from '../categories.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Place} from '../place.model';
+import {PlacesService} from '../places/places.service';
+import {CustomValidators} from 'ng2-validation';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import {AlertService} from '../../shared/alert/alert.service';
+import {Alert} from '../../shared/alert/alert';
 
 @Component({
   selector: 'app-place-form',
@@ -16,6 +19,7 @@ import { CustomValidators } from 'ng2-validation';
   styleUrls: ['./place-form.component.css']
 })
 export class PlaceFormComponent implements OnInit, OnDestroy {
+  editmode = false;
   $key: string;
   place: Place;
   imagePath: string;
@@ -35,7 +39,8 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
               private categoriesService: CategoriesService,
               private route: ActivatedRoute,
               private placesService: PlacesService,
-              private router: Router) {
+              private router: Router,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -44,6 +49,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
     this.prepareForGeocoding();
     this.categories = this.categoriesService.getCategories();
     if (this.route.snapshot.params['key'] != null) {
+      this.editmode = true;
       this.route.params.subscribe((params: Params) => {
         this.$key = params['key'];
         this.placesService.getPlaceById(this.$key).subscribe(place => {
@@ -109,11 +115,13 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
           this.placesService.addNewPlace(newPlace);
         });
     }
-    this.router.navigate(['places']);
+    this.placeForm.reset();
+    this.alertService.showAlert.next(new Alert('SUCCESS', 'Place successfully saved!', 'alert-success'));
+    new TimerObservable(3000).subscribe(() => this.router.navigate(['/places']));
   }
 
   isValidImageURL(imageURL: string) {
-    if (imageURL.match(/\.(jpeg|jpg|gif|png)/) != null) {
+    if (imageURL != null && imageURL.match(/\.(jpeg|jpg|gif|png)/) != null) {
       const img = new Image();
       img.onerror = img.onabort = () => {
         this.imagePath = this.invalidImageURL;
@@ -184,6 +192,15 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
         }
       })
     ;
+  }
+
+  onDeletePlace($key: string) {
+    this.alertService.showAlert.next(new Alert('WARNING', 'Place successfully deleted!', 'alert-warning'));
+    new TimerObservable(3000).subscribe(() => {
+      this.placeForm.reset();
+      this.placesService.deletePlace($key);
+      this.router.navigate(['/places']);
+    });
   }
 
   ngOnDestroy() {

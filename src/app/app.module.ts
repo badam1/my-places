@@ -13,6 +13,7 @@ import {AuthModule} from './auth/auth.module';
 import {SharedModule} from './shared/shared.module';
 import {AppRoutingModule} from './app-routing.module';
 import {firebaseConfig} from '../environments/firebase.config';
+import {AlertService} from './shared/alert/alert.service';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {firebaseConfig} from '../environments/firebase.config';
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [AlertService]
 })
 export class AppModule {
 }
