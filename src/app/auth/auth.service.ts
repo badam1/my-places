@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 
-import { User } from './user.model';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {User} from './user.model';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 
 @Injectable()
@@ -26,9 +26,9 @@ export class AuthService {
   }
 
   signUpUser(email: string, username: string, password: string) {
-    this.afa.auth.createUserWithEmailAndPassword(email, password).then(()=>
+    this.afa.auth.createUserWithEmailAndPassword(email, password).then((response) =>
       this.afd.object(`/users/${this.getAuthCurrentUser().uid}`).set(new User(email, username))
-  ).catch(error => console.log(error));
+    ).catch(error => console.log(error));
   }
 
   signInUser(email: string, password: string) {
@@ -43,6 +43,7 @@ export class AuthService {
 
   signOutUser() {
     this.afa.auth.signOut();
+    this.loggedInUser = null;
     this.router.navigate(['/places']);
   }
 
