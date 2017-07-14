@@ -65,6 +65,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
     } else if (this.route.snapshot.params['lat'] != null && this.route.snapshot.params['lng'] != null) {
       // IF GET COORDS IN ROUTING PARAMETER, than call reverse geocoding function with that params.
       this.realtimeReverseGeocoding(+this.route.snapshot.params['lat'], +this.route.snapshot.params['lng']);
+      this.editMode = true;
     } else {
       this.editMode = true;
     }
