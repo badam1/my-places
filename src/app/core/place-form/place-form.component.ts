@@ -12,6 +12,8 @@ import {CustomValidators} from 'ng2-validation';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
 import {AlertService} from '../../shared/alert/alert.service';
 import {Alert} from '../../shared/alert/alert';
+import {AuthService} from '../../auth/auth.service';
+import {User} from '../../auth/user.model';
 
 @Component({
   selector: 'app-place-form',
@@ -19,7 +21,7 @@ import {Alert} from '../../shared/alert/alert';
   styleUrls: ['./place-form.component.css']
 })
 export class PlaceFormComponent implements OnInit, OnDestroy {
-  editmode = false;
+  editMode = false;
   $key: string;
   place: Place;
   imagePath: string;
@@ -40,6 +42,7 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private placesService: PlacesService,
               private router: Router,
+              private auth: AuthService,
               private alertService: AlertService) {
   }
 
@@ -49,17 +52,21 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
     this.prepareForGeocoding();
     this.categories = this.categoriesService.getCategories();
     if (this.route.snapshot.params['key'] != null) {
-      this.editmode = true;
       this.route.params.subscribe((params: Params) => {
         this.$key = params['key'];
         this.placesService.getPlaceById(this.$key).subscribe(place => {
           this.place = place;
+          if (this.auth.getAuthCurrentUser().email === place.ownerEmail) {
+            this.editMode = true;
+          }
           this.fillUpFormWithCurrentPlace();
         });
       });
     } else if (this.route.snapshot.params['lat'] != null && this.route.snapshot.params['lng'] != null) {
       // IF GET COORDS IN ROUTING PARAMETER, than call reverse geocoding function with that params.
       this.realtimeReverseGeocoding(+this.route.snapshot.params['lat'], +this.route.snapshot.params['lng']);
+    } else {
+      this.editMode = true;
     }
   }
 
@@ -107,12 +114,14 @@ export class PlaceFormComponent implements OnInit, OnDestroy {
           if (response.status === 'OK') {
             newPlace.latitude = response.results[0].geometry.location.lat;
             newPlace.longitude = response.results[0].geometry.location.lng;
+            newPlace['ownerEmail'] = this.auth.getAuthCurrentUser().email;
           } else if (response.status === 'ZERO_RESULTS') {
             console.log('geocodingAPIService', 'ZERO_RESULTS', response.status);
           } else {
             console.log('geocodingAPIService', 'Other error', response.status);
           }
           this.placesService.addNewPlace(newPlace);
+          this.auth.getLoggedUser().subscribe((user: User) => this.placesService.addToMyPlaces(newPlace.$key));
         });
     }
     this.placeForm.reset();

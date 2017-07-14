@@ -1,6 +1,6 @@
 <div class="container">
   <br/><br/>
-  <h1 class="text-center">Edit Place</h1>
+  <h1 class="text-center">Place Details</h1>
   <div class="row">
     <div class="col-xs-12 col-md-12">
       <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
@@ -15,7 +15,7 @@
                      id="name"
                      formControlName="name"
                      class="form-control"
-                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('name'))">
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('name'))" [readOnly]="!editMode">
             </div>
           </div>
         </div>
@@ -29,7 +29,8 @@
                         formControlName="description"
                         class="form-control"
                         rows="3"
-                        [ngClass]="giveBootstrapValidationClassInput(placeForm.get('description'))">
+                        [ngClass]="giveBootstrapValidationClassInput(placeForm.get('description'))"
+                        [readOnly]="!editMode">
               </textarea>
             </div>
           </div>
@@ -43,7 +44,7 @@
                      id="address"
                      formControlName="address"
                      class="form-control"
-                     [ngClass]="addressControl.value ? 'form-control-success' : ''">
+                     [ngClass]="addressControl.value ? 'form-control-success' : ''" [readOnly]="!editMode">
             </div>
           </div>
         </div>
@@ -60,7 +61,7 @@
           </div>
         </div>
         <!--Choose categories row-->
-        <div class="row">
+        <div class="row" *ngIf="editMode">
           <div class="col-xs-12 col-md-12">
             <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(placeForm.get('category'))">
               <h5><label for="category">Category</label></h5>
@@ -83,7 +84,7 @@
                      id="imagePath"
                      formControlName="imagePath"
                      class="form-control"
-                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('imagePath'))">
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('imagePath'))" [readOnly]="!editMode">
 
             </div>
           </div>
@@ -104,7 +105,7 @@
                      id="phoneNumber"
                      formControlName="phoneNumber"
                      class="form-control"
-                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('phoneNumber'))">
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('phoneNumber'))" [readOnly]="!editMode">
             </div>
           </div>
         </div>
@@ -117,7 +118,7 @@
                      id="webUrl"
                      formControlName="webUrl"
                      class="form-control"
-                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('webUrl'))">
+                     [ngClass]="giveBootstrapValidationClassInput(placeForm.get('webUrl'))" [readOnly]="!editMode">
             </div>
           </div>
         </div>
@@ -137,7 +138,8 @@
                            id="openTime"
                            formControlName="openTime"
                            class="form-control"
-                           [ngClass]="giveBootstrapValidationClassInput(placeForm.get('openTime'))">
+                           [ngClass]="giveBootstrapValidationClassInput(placeForm.get('openTime'))"
+                           [readOnly]="!editMode">
                   </div>
                 </div>
                 <div class="col-xs-6 col-md-6">
@@ -147,7 +149,8 @@
                            id="closeTime"
                            formControlName="closeTime"
                            class="form-control"
-                           [ngClass]="giveBootstrapValidationClassInput(placeForm.get('closeTime'))">
+                           [ngClass]="giveBootstrapValidationClassInput(placeForm.get('closeTime'))"
+                           [readOnly]="!editMode">
                   </div>
                 </div>
               </div>
@@ -159,8 +162,10 @@
           <app-alert></app-alert>
         </div>
         <div class="col-md-12 text-center">
-          <button type="submit" class="btn btn-success btn-lg" [disabled]="!placeForm.valid">Save place</button>
-          <button type="button" class="btn btn-danger btn-lg" [ngClass]="editmode ? '' : 'hidden-xs-up'"
+          <button type="submit" class="btn btn-success btn-lg" [disabled]="!placeForm.valid"
+                  [ngClass]="editMode ? '' : 'hidden-xs-up'">Save place
+          </button>
+          <button type="button" class="btn btn-danger btn-lg" [ngClass]="editMode ? '' : 'hidden-xs-up'"
                   (click)="onDeletePlace(place.$key)">Delete place
           </button>
         </div>

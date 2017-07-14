@@ -7,6 +7,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/fromEvent';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
 import {Subscription} from 'rxjs/Subscription';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
   private filterDebounceTimer: Subscription;
 
   constructor(public auth: AuthService, private categoriesService: CategoriesService,
-              private placesService: PlacesService) {
+              private placesService: PlacesService, public router: Router) {
     this.placesService.filterPlaces = this.filterPlaces;
   }
 

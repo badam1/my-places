@@ -22,7 +22,7 @@
             <div class="form-group" [ngClass]="giveBootstrapValidationClassDiv(profileForm.get('email'))">
               <label for="email">Email</label>
               <input type="email" id="email" class="form-control" formControlName="email"
-                     [ngClass]="giveBootstrapValidationClassInput(profileForm.get('email'))"/>
+                     [ngClass]="giveBootstrapValidationClassInput(profileForm.get('email'))" readonly/>
             </div>
             <p *ngIf="profileForm.get('email').touched && profileForm.get('email').hasError('email')"
                class="text-danger">Please add a valid email</p>

@@ -5,9 +5,8 @@ import {enumerable, enumerableClassProperty} from '../shared/enumerable.decorato
 
 @enumerableClassProperty()
 export class Place {
-  id: number;
   name: string;
-  userEmail: string;
+  ownerEmail: string;
   // position
   latitude: number;
   longitude: number;
